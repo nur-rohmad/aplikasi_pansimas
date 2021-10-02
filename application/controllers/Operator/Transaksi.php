@@ -315,27 +315,37 @@ class Transaksi extends CI_Controller
         if ($this->form_validation->run() !== FALSE) {
 
             $where = ["id_transaksi" => $this->input->post('id_transaksi', TRUE)];
-            //  var_dump($id_pelanggan);
-            //  die;
-            $stand_meter = $this->M_transaksi->get_last_transaksi_pelanggan($id_pelanggan);
+            // var_dump($id_pelanggan);
+            // die;
+            $stand_meter = $this->M_transaksi->get_total_transaksi_pelanggan($id_pelanggan);
+            // var_dump($stand_meter);
+            // die;
+
+            if ((int)$stand_meter <= 1) {
+                // var_dump("nilai 1");
+                // die;
+                $stand_meter_pelanggan = $this->M_transaksi->get_last_transaksi_pelanggan($id_pelanggan);
+                // var_dump($stand_meter_pelanggan);
+                // die;
+                $params = [
+                    "start_meter" => 0,
+                    "end_meter" =>  (int)$stand_meter_pelanggan['end_meter'] - (int)$stand_meter_pelanggan['jumlah_meteran']
+                ];
+            } else {
+                // var_dump("nilai > 1");
+                // die;
+                $stand_meter_pelanggan = $this->M_transaksi->get_last_transaksi_pelanggans($id_pelanggan);
+                $params = [
+                    "start_meter" => $stand_meter_pelanggan['start_meter'],
+                    "end_meter" => $stand_meter_pelanggan['end_meter']
+                ];
+            }
 
             if ($this->M_transaksi->delete_transaksi($where)) {
-
-                if ($stand_meter == null) {
-                    $params = [
-                        "start_meter" => 0,
-                        "end_meter" => 0
-                    ];
-                } else {
-
-                    $params = [
-                        "start_meter" => $stand_meter['start_meter'],
-                        "end_meter" => $stand_meter['end_meter']
-                    ];
-                }
-
-                $where1 = ["id_pelanggan" => $id_pelanggan];
-                if ($this->M_transaksi->update_stand_meter($params, $where1)) {
+                $where = ["id_pelanggan" => $id_pelanggan];
+                // var_dump($params, $where);
+                // die;
+                if ($this->M_transaksi->update_stand_meter($params, $where)) {
                     $this->session->set_flashdata('success_transaksi', 'Data Berhasil di simpan');
                     redirect('operator/transaksi');
                 } else {

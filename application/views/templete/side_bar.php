@@ -38,7 +38,19 @@
              <p>
                Pelanggan
              </p>
+             <!-- <i class="right fas fa-angle-left"></i> -->
            </a>
+           <!-- <ul class="nav nav-treeview">
+             <li class="nav-item ml-3">
+               <a href="<?= base_url('operator/dashboard') ?>" class="nav-link <?php echo $this->uri->segment(2) == 'dashboard' ? 'active' : '' ?>">
+                 <i class="nav-icon fas fa-tachometer-alt"></i>
+                 <p>
+                   Stan Meter
+                 </p>
+               </a>
+             </li>
+
+           </ul> -->
          </li>
 
          <li class="nav-item">

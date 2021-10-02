@@ -190,9 +190,34 @@ class M_transaksi extends CI_Model
         }
     }
 
+    public function get_total_transaksi_pelanggan($id_pelanggan)
+    {
+        $sql = "SELECT COUNT(*) AS 'total' FROM transaksi WHERE id_pelanggan = ?";
+        $query = $this->db->query($sql, $id_pelanggan);
+        if ($query->num_rows() > 0) {
+            $result = $query->row_array();
+            $query->free_result();
+            return $result['total'];
+        } else {
+            return array();
+        }
+    }
+
     public function get_last_transaksi_pelanggan($id_pelanggan)
     {
-        $sql = "SELECT  a.end_meter, a.start_meter FROM transaksi a WHERE a.id_pelanggan = ? ORDER BY a.id_transaksi   DESC LIMIT 1,1";
+        $sql = "SELECT  a.end_meter, a.start_meter, a.jumlah_meteran FROM transaksi a WHERE a.id_pelanggan = ? ORDER BY a.id_transaksi   DESC LIMIT 1";
+        $query = $this->db->query($sql, $id_pelanggan);
+        if ($query->num_rows() > 0) {
+            $result = $query->row_array();
+            $query->free_result();
+            return $result;
+        } else {
+            return array();
+        }
+    }
+    public function get_last_transaksi_pelanggans($id_pelanggan)
+    {
+        $sql = "SELECT  a.end_meter, a.start_meter, a.jumlah_meteran FROM transaksi a WHERE a.id_pelanggan = ? ORDER BY a.id_transaksi   DESC LIMIT 1,1";
         $query = $this->db->query($sql, $id_pelanggan);
         if ($query->num_rows() > 0) {
             $result = $query->row_array();
