@@ -39,6 +39,7 @@
              <div class="card-header mt-2">
                  <h3 class="card-title">Tabel Pelanggan</h3>
                  <a class="btn btn-success float-right" href="<?= base_url('operator/pelanggan/add_pelanggan') ?>"><i class="fas fa-plus mr-1"></i> Add</a>
+                 <a class="btn btn-dark float-right mr-2" href="<?= base_url('operator/pelanggan/export_excel') ?>"><i class="fas fa-file-excel"></i> Export Excel</a>
                  <a class="btn btn-primary float-right mr-1" href="<?= base_url('operator/pelanggan/cetak_pelanggan') ?>"><i class="fas fa-print mr-1"></i> Cetak </a>
              </div>
              <!-- motifikasi -->

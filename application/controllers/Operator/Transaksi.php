@@ -1,6 +1,10 @@
 <?php
 defined('BASEPATH') or exit('No direct script access allowed');
 
+use PhpOffice\PhpSpreadsheet\Spreadsheet;
+use PhpOffice\PhpSpreadsheet\Writer\Xlsx;
+use PhpOffice\PhpSpreadsheet\Style\Alignment;
+
 class Transaksi extends CI_Controller
 {
     public function __construct()
@@ -315,25 +319,15 @@ class Transaksi extends CI_Controller
         if ($this->form_validation->run() !== FALSE) {
 
             $where = ["id_transaksi" => $this->input->post('id_transaksi', TRUE)];
-            // var_dump($id_pelanggan);
-            // die;
             $stand_meter = $this->M_transaksi->get_total_transaksi_pelanggan($id_pelanggan);
-            // var_dump($stand_meter);
-            // die;
 
             if ((int)$stand_meter <= 1) {
-                // var_dump("nilai 1");
-                // die;
                 $stand_meter_pelanggan = $this->M_transaksi->get_last_transaksi_pelanggan($id_pelanggan);
-                // var_dump($stand_meter_pelanggan);
-                // die;
                 $params = [
                     "start_meter" => 0,
                     "end_meter" =>  (int)$stand_meter_pelanggan['end_meter'] - (int)$stand_meter_pelanggan['jumlah_meteran']
                 ];
             } else {
-                // var_dump("nilai > 1");
-                // die;
                 $stand_meter_pelanggan = $this->M_transaksi->get_last_transaksi_pelanggans($id_pelanggan);
                 $params = [
                     "start_meter" => $stand_meter_pelanggan['start_meter'],
@@ -343,8 +337,6 @@ class Transaksi extends CI_Controller
 
             if ($this->M_transaksi->delete_transaksi($where)) {
                 $where = ["id_pelanggan" => $id_pelanggan];
-                // var_dump($params, $where);
-                // die;
                 if ($this->M_transaksi->update_stand_meter($params, $where)) {
                     $this->session->set_flashdata('success_transaksi', 'Data Berhasil di simpan');
                     redirect('operator/transaksi');
@@ -359,5 +351,117 @@ class Transaksi extends CI_Controller
         }
 
         redirect('operator/transaksi');
+    }
+
+    public function export_excel()
+    {
+        $styleJudul = [
+            'font' => [
+                'bold' => true,
+                'size' => 12
+            ],
+            'alignment' => [
+                'horizontal' => Alignment::HORIZONTAL_CENTER
+            ]
+        ];
+        $spreadsheet = new Spreadsheet();
+        $sheet = $spreadsheet->getActiveSheet();
+        $bulan = date("F");
+
+        //Set Default Teks
+        $spreadsheet->getDefaultStyle()
+            ->getFont()
+            ->setName('Times New Roman')
+            ->setSize(11);
+        //Style Judul table
+        $spreadsheet->getActiveSheet()
+            ->setCellValue('A1', "Data Transaksi KP-SPAM Bintoyo Bulan " . $bulan);
+
+        $spreadsheet->getActiveSheet()
+            ->mergeCells("A1:H1");
+
+        $spreadsheet->getActiveSheet()
+            ->getStyle('A1')
+            ->getFont()
+            ->setSize(14);
+
+        $spreadsheet->getActiveSheet()
+            ->getStyle('A1')
+            ->getAlignment()
+            ->setHorizontal(Alignment::HORIZONTAL_CENTER);
+        // style lebar kolom
+        $spreadsheet->getActiveSheet()
+            ->getColumnDimension('A')
+            ->setWidth(10);
+        $spreadsheet->getActiveSheet()
+            ->getColumnDimension('B')
+            ->setWidth(30);
+        $spreadsheet->getActiveSheet()
+            ->getColumnDimension('C')
+            ->setWidth(45);
+        $spreadsheet->getActiveSheet()
+            ->getColumnDimension('D')
+            ->setWidth(20);
+        $spreadsheet->getActiveSheet()
+            ->getColumnDimension('E')
+            ->setWidth(20);
+        $spreadsheet->getActiveSheet()
+            ->getColumnDimension('F')
+            ->setWidth(20);
+        $spreadsheet->getActiveSheet()
+            ->getColumnDimension('G')
+            ->setWidth(20);
+        $spreadsheet->getActiveSheet()
+            ->getColumnDimension('H')
+            ->setWidth(20);
+
+        $sheet->setCellValue('A2', 'No');
+        $sheet->setCellValue('B2', 'Id Pelanggan');
+        $sheet->setCellValue('C2', 'Nama');
+        $sheet->setCellValue('D2', 'Bulan tagihan');
+        $sheet->setCellValue('E2', 'Start meter');
+        $sheet->setCellValue('F2', 'End meter');
+        $sheet->setCellValue('G2', 'Jumlah Meteran');
+        $sheet->setCellValue('H2', 'Total Tagihan');
+
+
+        // STYLE judul table
+        $spreadsheet->getActiveSheet()
+            ->getStyle('A2:H2')
+            ->applyFromArray($styleJudul);
+
+        $pelanggan = $this->M_transaksi->get_all_transaksi();
+        $no = 1;
+        $x = 3;
+        foreach ($pelanggan as $row) {
+            $sheet->setCellValue('A' . $x, $no++);
+            $sheet->setCellValue('B' . $x, $row['id_pelanggan']);
+            $sheet->setCellValue('C' . $x, $row['name_pelanggan']);
+            $sheet->setCellValue('D' . $x, date("F  Y", strtotime($row['tanggal_transaksi']),));
+            $sheet->setCellValue('E' . $x, $row['start_meter']);
+            $sheet->setCellValue('F' . $x, $row['end_meter']);
+            $sheet->setCellValue('G' . $x, $row['jumlah_meteran']);
+            $sheet->setCellValue('H' . $x, $row['total_bayar']);
+            $x++;
+        }
+        //sum 
+        $last_x = $x - 1;
+        $total = 'G3:G' . $last_x;
+        $total_bayar = 'H3:H' . $last_x;
+        $sheet->setCellValue('A' . $x, "TOTAL");
+        $spreadsheet->getActiveSheet()->getStyle('A' . $x)->getAlignment()->setHorizontal(Alignment::HORIZONTAL_CENTER);
+        $sheet->mergeCells('A' . $x . ':F' . $x);
+
+        $sheet->setCellValue('G' . $x, '=SUM(' . $total . ')');
+        $sheet->setCellValue('H' . $x, '=SUM(' . $total_bayar . ')');
+
+        $writer = new Xlsx($spreadsheet);
+        $filename = 'data_transaksi_KP-SPAM_Bintoyo_bulan_' . $bulan;
+
+        header('Content-Type: application/vnd.ms-excel');
+        header('Content-Disposition: attachment;filename="' . $filename . '.xlsx"');
+        header('Cache-Control: max-age=0');
+
+        $writer->save('php://output');
     }
 }
