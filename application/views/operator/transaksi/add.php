@@ -61,7 +61,7 @@
 
                <div class="form-group">
                  <label>Nama Pelanggan</label>
-                 <select class="custom-select form-control " data-placeholder="Masukkan Nama Pelanggan" name="nama_pelanggan" id="nama_pelanggan">
+                 <select class="form-control select-2" data-placeholder="Masukkan Nama Pelanggan" name="nama_pelanggan" id="nama_pelanggan">
                    <option value=""></option>
                    <?php foreach ($pelanggan as $nama) : ?>
                      <option value="<?= $nama['id_pelanggan']; ?>"><?= $nama['id_pelanggan']; ?> - <?= $nama['name_pelanggan']; ?></option>

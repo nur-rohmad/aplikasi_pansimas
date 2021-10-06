@@ -18,6 +18,7 @@
 
   <!-- load style select 2 -->
   <link rel="stylesheet" href="<?= base_url('resource/adminlte31/'); ?>plugins/select2/css/select2.min.css">
+  <link rel="stylesheet" href="<?= base_url('resource/adminlte31/'); ?>plugins/select2-bootstrap4-theme/select2-bootstrap4.min.css">
 
   <!-- data tabel -->
   <link rel="stylesheet" href="https://cdn.datatables.net/1.11.2/css/jquery.dataTables.min.css">

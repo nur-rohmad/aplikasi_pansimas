@@ -44,7 +44,7 @@
                             <div class="row">
                                 <div class="col-md-2 col-12">
                                     <div class="form-group my-1">
-                                        <select name="bulan_transaksi" class="form-control select2" placeholder="Pilih Jenis">
+                                        <select name="bulan_transaksi" class="form-control select-2" placeholder="Pilih Jenis">
                                             <option value="">Pilih Bulan</option>
                                             <?php
                                             $no = 1;
