@@ -44,23 +44,49 @@
             </tr>
             <tr>
                 <td class="label">Biaya Meteran</td>
-                <td>: <?= $transaksi['jumlah_meteran'] ?> x Rp. <?= number_format($biaya_meter['jumlah_tagihan'], 2, ',', '.') ?> = Rp. <?= number_format($transaksi['biaya_pemakaian'], 2, ',', '.'); ?></td>
+                <td>: <?= $transaksi['jumlah_meteran'] ?> x Rp. <?= number_format($biaya_meter['jumlah_tagihan'], 2, ',', '.') ?> </td>
+            </tr>
+            <tr>
+                <td></td>
+                <td colspan="2">: Rp. <?= number_format($transaksi['biaya_pemakaian'], 2, ',', '.'); ?></td>
             </tr>
             <tr>
                 <td class="label">Abunemen</td>
                 <td>: Rp. <?= number_format($biaya_abunemen['jumlah_tagihan'], 2, ',', '.') ?></td>
             </tr>
             <tr>
+                <td></td>
+                <td>
+                    <hr style="margin-left: 0.5em; width: 75%; border-top:1px black solid;" color="black">
+                    <!-- <div class="garis ml-2"></div> -->
+                </td>
+                <td>
+                    <h1> +</h1>
+                </td>
+            </tr>
+            <tr>
                 <td class="label">Total Bayar</td>
-                <td>: Rp. <?= number_format($transaksi['biaya_pemakaian'], 2, ',', '.') ?> + Rp. <?= number_format($biaya_abunemen['jumlah_tagihan'], 2, ',', '.') ?> = Rp. <?= number_format($transaksi['total_bayar'], 2, ',', '.') ?></td>
+                <td>: Rp. <?= number_format($transaksi['total_bayar'], 2, ',', '.') ?></td>
             </tr>
         </table>
     </div>
 </div>
 
 <style>
+    .content {
+        margin-left: 5em;
+        margin-top: 2em;
+    }
+
     .row {
         background-image: url('./resource/adminlte31/img/pansimas.jpeg');
+    }
+
+    .garis {
+        margin-top: 1.5em;
+        width: 100px;
+        height: 0px;
+        border-bottom: 1px black solid;
     }
 
     .label {

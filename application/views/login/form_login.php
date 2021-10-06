@@ -25,7 +25,7 @@
 
       <form action="<?= base_url('login/proccess_login') ?>" method="post">
         <div class="input-group mb-3">
-          <input type="text" class="form-control" name="user_name" placeholder="User Name">
+          <input type="text" required class="form-control" name="user_name" placeholder="User Name">
           <div class="input-group-append">
             <div class="input-group-text">
               <span class="fas fa-user"></span>
@@ -33,7 +33,7 @@
           </div>
         </div>
         <div class="input-group mb-3">
-          <input type="password" class="form-control" name="pass" placeholder="Password">
+          <input type="password" required class="form-control" name="pass" placeholder="Password">
           <div class="input-group-append">
             <div class="input-group-text">
               <span class="fas fa-lock"></span>

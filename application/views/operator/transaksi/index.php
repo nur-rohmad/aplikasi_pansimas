@@ -94,7 +94,7 @@
              <div class="card-header mt-2" id="title-card">
                  <h3 class="card-title text-center">Tabel Transaksi</h3>
                  <a class="btn btn-success float-right" href="<?= base_url('operator/transaksi/add_transaksi') ?>"><i class="fas fa-plus mr-1"></i> Add</a>
-                 <a class="btn btn-primary float-right mr-2" href="<?= base_url('operator/transaksi/cetak_laporan_bulanan') ?>"><i class="fas fa-print mr-1"></i> Cetak Laporan Bulan Ini</a>
+                 <a target="blank" class="btn btn-primary float-right mr-2" href="<?= base_url('operator/transaksi/cetak_laporan_bulanan') ?>"><i class="fas fa-print mr-1"></i> Cetak Laporan Bulan Ini</a>
              </div>
              <!-- motifikasi -->
              <?php
@@ -139,7 +139,7 @@
                                      <td class="text-center"> <?= $data['jumlah_meteran']; ?></td>
                                      <td class="text-center"> Rp. <?= number_format($data['total_bayar'], 2, ',', '.'); ?></td>
                                      <td class="text-center">
-                                         <a href="<?= base_url('operator/transaksi/print/') . $data['id_transaksi'] ?>" class="btn btn-sm btn-info"><i class="fas fa-print"></i> Cetak</a>
+                                         <a target="blank" href="<?= base_url('operator/transaksi/print/') . $data['id_transaksi'] ?>" class="btn btn-sm btn-info"><i class="fas fa-print"></i> Cetak</a>
                                          <a href="<?= base_url('operator/transaksi/delete_transaksi/') . $data['id_transaksi'] ?>" class="btn btn-sm btn-danger mt-2"><i class="fas fa-trash-alt"></i> Hapus</a>
 
                                      </td>
