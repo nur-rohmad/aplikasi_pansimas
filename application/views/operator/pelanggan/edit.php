@@ -54,7 +54,7 @@
 
                <div class="form-group">
                  <label for="selectPortal">Pilih RW </label>
-                 <select class="custom-select foom-control-border" name="rw_pelanggan" id="rw_pelanggan">
+                 <select class="custom-select foom-control-border select-2" name="rw_pelanggan" id="rw_pelanggan">
                    <?php for ($i = 1; $i <= 3; $i++) : ?>
                      <option value="<?= $i; ?>" <?php if ($pelanggan['rw_pelanggan'] == $i) : ?> selected<?php endif; ?>>0<?= $i; ?></option>
                    <?php endfor; ?>
@@ -62,8 +62,8 @@
                </div>
 
                <div class="form-group">
-                 <label for="selectPortal">Pilih RW </label>
-                 <select class="custom-select foom-control-border" name="rt_pelanggan" id="rt_pelanggan">
+                 <label for="selectPortal">Pilih RT </label>
+                 <select class="custom-select foom-control-border select-2" name="rt_pelanggan" id="rt_pelanggan">
                    <?php for ($i = 1; $i <= 12; $i++) : ?>
                      <option <?= $i; ?> <?php if ($pelanggan['rt_pelanggan'] == $i) : ?> selected<?php endif; ?>>
                        <?php if ($i >= 10) : ?>

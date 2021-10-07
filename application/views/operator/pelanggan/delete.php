@@ -49,7 +49,7 @@
                <input type="hidden" name="id_pelanggan" id="id_pelanggan" value="<?= $pelanggan['id_pelanggan']; ?>">
                <div class="form-group">
                  <label for="role_name">Nama Pelanggan</label>
-                 <input type="text" class="form-control" id="nama_pelanggan" value="<?= $pelanggan['name_pelanggan']; ?>" name="nama_pelanggan" disabled />
+                 <input type="text" class="form-control" readonly id="nama_pelanggan" value="<?= $pelanggan['name_pelanggan']; ?>" name="nama_pelanggan" />
                </div>
 
                <div class="form-group">

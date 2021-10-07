@@ -92,10 +92,10 @@
 
          <div class="card">
              <div class="card-header mt-2" id="title-card">
-                 <h3 class="card-title text-center">Tabel Transaksi</h3>
+                 <h3 class="card-title text-center">Tabel Transaksi Bulan <?= date("F") ?></h3>
                  <a class="btn btn-success float-right" href="<?= base_url('operator/transaksi/add_transaksi') ?>"><i class="fas fa-plus mr-1"></i> Add</a>
                  <a class="btn btn-dark float-right mr-2" href="<?= base_url('operator/transaksi/export_excel') ?>"><i class="fas fa-file-excel mr-1"></i> Export Excel</a>
-                 <a target="blank" class="btn btn-primary float-right mr-2" href="<?= base_url('operator/transaksi/cetak_laporan_bulanan') ?>"><i class="fas fa-print mr-1"></i> Cetak Laporan Bulan Ini</a>
+                 <a target="blank" class="btn btn-primary float-right mr-2" href="<?= base_url('operator/transaksi/cetak_laporan_bulanan') ?>"><i class="fas fa-print mr-1"></i> Cetak Laporan Bulan <?= date("F") ?></a>
              </div>
              <!-- motifikasi -->
              <?php
