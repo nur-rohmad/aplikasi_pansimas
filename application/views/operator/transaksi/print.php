@@ -31,7 +31,7 @@
             </tr>
             <tr>
                 <td class="label">Tagihan Bulan</td>
-                <td>: <?= date("F  Y", strtotime($transaksi['tanggal_transaksi']),) ?></td>
+                <td>: <?= format_indo($transaksi['tanggal_transaksi']) ?></td>
             </tr>
 
             <tr>

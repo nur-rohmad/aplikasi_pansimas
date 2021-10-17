@@ -117,6 +117,27 @@ class Transaksi extends CI_Controller
         redirect('pelanggan/transaksi/add_tagihan');
     }
 
+    // function bulan indo
+    public function tanggal_indo($tanggal)
+    {
+        $bulan = array(
+            1 =>   'Januari',
+            'Februari',
+            'Maret',
+            'April',
+            'Mei',
+            'Juni',
+            'Juli',
+            'Agustus',
+            'September',
+            'Oktober',
+            'November',
+            'Desember'
+        );
+        $split = explode('-', $tanggal);
+        return  $bulan[(int)$split[1]] . ' ' . $split[0];
+    }
+
     //start transaksi
     public function index()
     {
@@ -366,7 +387,7 @@ class Transaksi extends CI_Controller
         ];
         $spreadsheet = new Spreadsheet();
         $sheet = $spreadsheet->getActiveSheet();
-        $bulan = date("F");
+        $bulan = format_indo(date('Y-m-d'));
 
         //Set Default Teks
         $spreadsheet->getDefaultStyle()
@@ -437,7 +458,7 @@ class Transaksi extends CI_Controller
             $sheet->setCellValue('A' . $x, $no++);
             $sheet->setCellValue('B' . $x, $row['id_pelanggan']);
             $sheet->setCellValue('C' . $x, $row['name_pelanggan']);
-            $sheet->setCellValue('D' . $x, date("F  Y", strtotime($row['tanggal_transaksi']),));
+            $sheet->setCellValue('D' . $x, format_indo($row['tanggal_transaksi']));
             $sheet->setCellValue('E' . $x, $row['start_meter']);
             $sheet->setCellValue('F' . $x, $row['end_meter']);
             $sheet->setCellValue('G' . $x, $row['jumlah_meteran']);

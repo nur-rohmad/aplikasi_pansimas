@@ -113,7 +113,7 @@
                                                 <td class="text-center"><?= $i; ?></td>
                                                 <td><?= $data['id_pelanggan']; ?></td>
                                                 <td><?= $data['name_pelanggan']; ?></td>
-                                                <td class="text-center"> <?= date("F  Y", strtotime($data['tanggal_transaksi']),); ?></td>
+                                                <td class="text-center"> <?= format_indo($data['tanggal_transaksi']) ?></td>
                                                 <td class="text-center"><?= $data['start_meter']; ?></td>
                                                 <td class="text-center"><?= $data['end_meter']; ?></td>
                                                 <td class="text-center"> <?= $data['jumlah_meteran']; ?></td>
