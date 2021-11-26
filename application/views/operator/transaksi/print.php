@@ -73,6 +73,15 @@
 </div>
 
 <style>
+    @font-face {
+        font-family: 'minisystem';
+        src: url('<?= base_url('resource/adminlte31/font/minisystem.ttf') ?>');
+    }
+
+    .content {
+        font-family: 'minisystem';
+    }
+
     .content {
         margin-left: 5em;
         margin-top: 2em;
@@ -97,6 +106,9 @@
 
     td {
         letter-spacing: 2px;
+        /* font-family: 'minisystem'; */
+        font-weight: bold;
+
     }
 
     img {
@@ -114,7 +126,7 @@
     }
 
     h4 {
-        font-family: 'Times New Roman', Times, serif;
+        /* font-family: 'Times New Roman', Times, serif; */
         font-weight: bold;
     }
 
@@ -131,8 +143,9 @@
 
     h5 {
         font-style: italic;
-        font-family: 'Times New Roman', Times, serif;
+        /* font-family: 'Times New Roman', Times, serif; */
         font-size: 20px;
+        font-weight: bold;
     }
 
     .tlp {

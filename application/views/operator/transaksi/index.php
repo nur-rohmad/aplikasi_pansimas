@@ -96,6 +96,7 @@
                 <a class="btn btn-success float-right" href="<?= base_url('operator/transaksi/add_transaksi') ?>"><i class="fas fa-plus mr-1"></i> Add</a>
                 <a class="btn btn-dark float-right mr-2" href="<?= base_url('operator/transaksi/export_excel') ?>"><i class="fas fa-file-excel mr-1"></i> Export Excel</a>
                 <a target="blank" class="btn btn-primary float-right mr-2" href="<?= base_url('operator/transaksi/cetak_laporan_bulanan') ?>"><i class="fas fa-print mr-1"></i> Cetak Laporan Bulan <?= format_indo(date("Y-m-d")) ?></a>
+                <!-- <a target="blank" class="btn btn-primary float-right mr-2" href="<?= base_url('operator/transaksi/cetak_pdf') ?>"><i class="fas fa-print mr-1"></i> Cetak Pdf</a> -->
             </div>
             <!-- motifikasi -->
             <?php

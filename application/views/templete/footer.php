@@ -8,7 +8,7 @@
   <div class="float-right d-none d-sm-block">
     <b>Version</b> 1.0
   </div>
-  <strong>Copyright &copy; <?= date('Y'); ?> <a href="<?= base_url('operator/') . $this->uri->segment(2) ?>">KP - SPAMS Panguripa</a>.</strong> All rights reserved.
+  <strong>Copyright &copy; <?= date('Y'); ?> <a href="<?= base_url('operator/') . $this->uri->segment(2) ?>">KP - SPAMS Panguripan</a>.</strong> All rights reserved.
 </footer>
 
 </div>
@@ -64,6 +64,7 @@
           title: 'Data  Transaksi KP - SPAMS Panguripan ',
         }
       ],
+      "searching": false
     });
 
     var table = $("#myTable2").DataTable({

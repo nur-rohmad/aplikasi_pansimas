@@ -97,4 +97,16 @@ class M_pelanggan extends CI_Model
         $query = "DELETE FROM pelanggan WHERE id_pelanggan = ?";
         return $this->db->query($query, $where);
     }
+    //delete pelanggan dari stand_meter
+    public function delete_pelanggan_stand_meter($where)
+    {
+        $query = "DELETE FROM stand_meter_pelanggan WHERE id_pelanggan = ?";
+        return $this->db->query($query, $where);
+    }
+    //delete pelanggan dari transaksi
+    public function delete_pelanggan_transaksi($where)
+    {
+        $query = "DELETE FROM transaksi WHERE id_pelanggan = ?";
+        return $this->db->query($query, $where);
+    }
 }

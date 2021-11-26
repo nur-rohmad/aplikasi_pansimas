@@ -1,9 +1,15 @@
 <?php
 defined('BASEPATH') or exit('No direct script access allowed');
+// require_once('./application/third_party/dompdf-master/autoload.inc.php');
 
 use PhpOffice\PhpSpreadsheet\Spreadsheet;
 use PhpOffice\PhpSpreadsheet\Writer\Xlsx;
 use PhpOffice\PhpSpreadsheet\Style\Alignment;
+
+//dom pdf 
+use Dompdf\Dompdf;
+
+
 
 class Transaksi extends CI_Controller
 {
@@ -484,5 +490,26 @@ class Transaksi extends CI_Controller
         header('Cache-Control: max-age=0');
 
         $writer->save('php://output');
+    }
+
+    //     cetak pdf
+    public function cetak_pdf()
+    {
+        // instantiate and use the dompdf class
+        $dompdf = new Dompdf();
+        $data['biaya_meter'] = $this->M_transaksi->get_harga_permeter();
+        $data['biaya_abunemen'] = $this->M_transaksi->get_harga_abunemen();
+        $data['transaksi'] = $this->M_transaksi->get_data_print("T000000001");
+        $view = $this->load->view('operator/transaksi/print', $data, true);
+        $dompdf->loadHtml($view);
+
+        // (Optional) Setup the paper size and orientation
+        $dompdf->setPaper(array('0', '0', '340.157', '396.85'), 'potrat');
+
+        // Render the HTML as PDF
+        $dompdf->render();
+
+        // Output the generated PDF to Browser
+        $dompdf->stream("hasil1.pdf", array("Attachment" => 0));
     }
 }

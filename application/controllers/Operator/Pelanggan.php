@@ -144,8 +144,16 @@ class Pelanggan extends CI_Controller
             $where = ['id_pelanggan' => $this->input->post('id_pelanggan')];
             //proses insert
             if ($this->M_pelanggan->delete_pelanggan($where)) {
-                $this->session->set_flashdata('success', 'Data Berhasil dihapus');
-                redirect('operator/pelanggan');
+                if ($this->M_pelanggan->delete_pelanggan_stand_meter($where)) {
+                    if ($this->M_pelanggan->delete_pelanggan_transaksi($where)) {
+                        $this->session->set_flashdata('success', 'Data Berhasil dihapus');
+                        redirect('operator/pelanggan');
+                    } else {
+                        $this->session->set_flashdata('success', 'Data Gagal dihapus');
+                    }
+                } else {
+                    $this->session->set_flashdata('success', 'Data Gagal dihapus');
+                }
             } else {
                 $this->session->set_flashdata('success', 'Data Gagal dihapus');
             }
