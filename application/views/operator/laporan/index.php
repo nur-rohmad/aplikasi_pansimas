@@ -92,52 +92,52 @@
 
 
                         <div class="card-body">
-                            <table id="myTable" class="table table-striped table-bordered display">
-                                <thead>
-                                    <tr>
-                                        <th>No</th>
-                                        <th>ID Pelanggan</th>
-                                        <th>Nama Pelanggan</th>
-                                        <th>Bulan Tagihan</th>
-                                        <th>Start Meter</th>
-                                        <th>End Meter</th>
-                                        <th>Jumlah Meteran</th>
-                                        <th>Total Tagihan</th>
-                                    </tr>
-                                </thead>
-                                <tbody>
-                                    <?php if ($transaksi != null) : ?>
-                                        <?php $i = 1; ?>
-                                        <?php foreach ($transaksi as $data) : ?>
-                                            <tr>
-                                                <td class="text-center"><?= $i; ?></td>
-                                                <td><?= $data['id_pelanggan']; ?></td>
-                                                <td><?= $data['name_pelanggan']; ?></td>
-                                                <td class="text-center"> <?= format_indo($data['tanggal_transaksi']) ?></td>
-                                                <td class="text-center"><?= $data['start_meter']; ?></td>
-                                                <td class="text-center"><?= $data['end_meter']; ?></td>
-                                                <td class="text-center"> <?= $data['jumlah_meteran']; ?></td>
-                                                <td class="text-center"> Rp. <?= number_format($data['total_bayar'], 2, ',', '.'); ?></td>
-                                            </tr>
-                                            <?php $i++; ?>
-                                        <?php endforeach; ?>
-                                        <!-- <tr>
-                            
-                            </tr> -->
-                                    <?php else : ?>
-                                        <tr class="text-center">
-                                            <td colspan="8">
-                                                <i class="fas fa-folder-open fa-2x mt-2"></i>
-                                                <p>Data Tidak di Temukan</p>
-                                            </td>
+                            <div class="table-responsive">
+                                <table id="myTable" class="table table-striped table-bordered display">
+                                    <thead>
+                                        <tr>
+                                            <th>No</th>
+                                            <th>ID Pelanggan</th>
+                                            <th>Nama Pelanggan</th>
+                                            <th>Bulan Tagihan</th>
+                                            <th>Start Meter</th>
+                                            <th>End Meter</th>
+                                            <th>Jumlah Meteran</th>
+                                            <th>Total Tagihan</th>
+                                            <th>Actions</th>
                                         </tr>
-                                    <?php endif; ?>
-                                </tbody>
-                                <!-- <tfoot>
-                            <td colspan="7" class="text-center"><strong>TOTAL PENDAPATAN</strong></td>
-                            <td>Rp. <?= number_format($total_pendapatan['total'], 2, ',', '.');  ?> </td>
-                    </tfoot> -->
-                            </table>
+                                    </thead>
+                                    <tbody>
+                                        <?php if ($transaksi != null) : ?>
+                                            <?php $i = 1; ?>
+                                            <?php foreach ($transaksi as $data) : ?>
+                                                <tr>
+                                                    <td class="text-center"><?= $i; ?></td>
+                                                    <td><?= $data['id_pelanggan']; ?></td>
+                                                    <td><?= $data['name_pelanggan']; ?></td>
+                                                    <td class="text-center"> <?= format_indo($data['tanggal_transaksi']) ?></td>
+                                                    <td class="text-center"><?= $data['start_meter']; ?></td>
+                                                    <td class="text-center"><?= $data['end_meter']; ?></td>
+                                                    <td class="text-center"> <?= $data['jumlah_meteran']; ?></td>
+                                                    <td class="text-center"> Rp. <?= number_format($data['total_bayar'], 2, ',', '.'); ?></td>
+                                                    <td class="text-center"> <a href="<?= base_url('operator/transaksi/cetak_nota/') . $data['id_transaksi'] ?>" class="btn btn-sm btn-info"><i class="fas fa-print"></i> Cetak</a> </td>
+                                                </tr>
+                                                <?php $i++; ?>
+                                            <?php endforeach; ?>
+                                          
+                                        <?php else : ?>
+                                            <tr class="text-center">
+                                                <td colspan="8">
+                                                    <i class="fas fa-folder-open fa-2x mt-2"></i>
+                                                    <p>Data Tidak di Temukan</p>
+                                                </td>
+                                            </tr>
+                                        <?php endif; ?>
+                                    </tbody>
+                                   
+                                </table>
+                            </div>
+
                         </div>
                     </div>
                 </div>

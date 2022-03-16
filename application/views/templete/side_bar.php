@@ -11,11 +11,12 @@
      <!-- Sidebar user (optional) -->
      <div class="user-panel mt-3 pb-3 mb-3 d-flex">
        <div class="image">
-         <img src="<?= base_url('resource/adminlte31/') ?>/img/<?= $user_data['user_photo']  ?>" class="img elevation-2" alt="User Image">
+         <img src="<?= base_url('resource/adminlte31/') ?>/img/profile/<?= $user_data['user_photo']  ?>" class="img elevation-2" alt="User Image">
        </div>
        <div class="info">
-         <a href="#" class="d-block"><?= $user_data['user_name']; ?></a>
-         <a href="<?= base_url('login/logout') ?>"><i class="fas fa-sign-out-alt"></i></a>
+         <a href="<?= base_url('profil') ?>" class="d-block"><?= $user_data['nama_lengkap']; ?></a>
+         <span class="badge badge-success mr-2"> <?= ucwords($user_data['user_role_name']); ?></span>
+         <a onclick="logout()" href="#"><i class="fas fa-sign-out-alt"></i></a>
        </div>
      </div>
 
@@ -61,6 +62,14 @@
              </p>
            </a>
          </li>
+         <li class="nav-item">
+           <a href="<?= base_url('operator/pembayaran') ?>" class="nav-link <?php echo $this->uri->segment(2) == 'pembayaran' ? 'active' : '' ?>">
+             <i class="nav-icon fas fa-money-check-alt"></i>
+             <p>
+               Pembayaran
+             </p>
+           </a>
+         </li>
 
          <li class="nav-item">
            <a href="<?= base_url('operator/laporan') ?>" class="nav-link <?php echo $this->uri->segment(2) == 'laporan' ? 'active' : '' ?>" class="nav-link">
@@ -70,10 +79,51 @@
              </p>
            </a>
          </li>
-
+        <li class="nav-item">
+           <a href="<?= base_url('operator/pengaduan') ?>" class="nav-link <?php echo $this->uri->segment(2) == 'pengaduan' ? 'active' : '' ?>">
+             <i class="nav-icon fas fa-phone-alt"></i>
+             <p>
+               Pengaduan
+             </p>
+             <?php if (cek_pengaduan() > 0) : ?>
+               <span href="#" class="badge badge-primary right"><?= cek_pengaduan(); ?></span>
+             <?php endif; ?>
+           </a>
+         </li>
        </ul>
      </nav>
      <!-- /.sidebar-menu -->
    </div>
    <!-- /.sidebar -->
  </aside>
+
+ <script>
+   function logout() {
+     Swal.fire({
+       icon: 'warning',
+       title: ' Anda Yakin Ingin Log Out ? ',
+       showDenyButton: true,
+       // showButton: true,
+
+       //  showCancelButton: true,
+       confirmButtonText: 'Iya',
+       denyButtonText: `Tidak`,
+       confirmButtonColor: '#3085d6',
+       denyButtonColor: '#d33',
+     }).then((result) => {
+       /* Read more about isConfirmed, isDenied below */
+       if (result.isConfirmed) {
+         window.location.href = "<?= base_url("login/logout") ?>";
+         //  Swal.fire('Saved!', '', 'success')
+       } else if (result.isDenied) {
+         Swal.fire({
+           position: 'top-center',
+           icon: 'error',
+           title: 'Log out Dibatalkan',
+           showConfirmButton: false,
+           timer: 1500
+         })
+       }
+     })
+   }
+ </script>

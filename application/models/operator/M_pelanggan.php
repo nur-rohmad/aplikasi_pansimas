@@ -1,4 +1,7 @@
 <?php
+
+use Prophecy\Promise\ThrowPromise;
+
 defined('BASEPATH') or exit('No direct script access allowed');
 
 class M_pelanggan extends CI_Model
@@ -12,7 +15,7 @@ class M_pelanggan extends CI_Model
     //get data pelanggan
     public function get_all_pelanggan()
     {
-        $sql = "SELECT a.id_pelanggan, a.name_pelanggan, a.rt_pelanggan, a.rw_pelanggan FROM pelanggan a";
+        $sql = "SELECT a.id_pelanggan, a.name_pelanggan, a.rt_pelanggan, a.rw_pelanggan, b.* FROM pelanggan a join user_table b on a.user_id=b.user_id";
         $query = $this->db->query($sql);
         if ($query->num_rows() > 0) {
             $result = $query->result_array();
@@ -49,11 +52,52 @@ class M_pelanggan extends CI_Model
             return array();
         }
     }
-
-    // get last id
-    function get_pelanggan_last_id()
+    //get data user
+    public function get_user_detail($user_id)
     {
-        $sql = "SELECT right(id_pelanggan,2)'last_number' FROM pelanggan  ORDER BY id_pelanggan DESC LIMIT 1";
+        $sql = "SELECT * FROM pelanggan WHERE id_pelanggan = ?";
+        $query = $this->db->query($sql, $user_id);
+        if ($query->num_rows() > 0) {
+            $result = $query->row_array();
+            $query->free_result();
+            return $result;
+        } else {
+            return array();
+        }
+    }
+
+    // get detail pelanggan
+    public function get_detail_pelanggan($user_id)
+    {
+        $sql = "SELECT * FROM pelanggan WHERE user_id = ?";
+        $query = $this->db->query($sql, $user_id);
+        if ($query->num_rows() > 0) {
+            $result = $query->row_array();
+            $query->free_result();
+            return $result;
+        } else {
+            return array();
+        }
+    }
+
+    // get las user id
+    public function get_last_user()
+    {
+        $sql = "SELECT max(user_id) as 'max' from user_table";
+        $query = $this->db->query($sql);
+        if ($query->num_rows() > 0) {
+            $result = $query->row_array();
+            $query->free_result();
+            $number = (int)$result['max'] + 1;
+            return sprintf("%s", $number);
+        } else {
+            return array();
+        }
+    }
+    // get last id
+    function get_user_last_id()
+    {
+        $sql = "SELECT right(user_id,2)'last_number' FROM user_table  ORDER BY user_id DESC LIMIT 1";
         $query = $this->db->query($sql);
         if ($query->num_rows() > 0) {
             $result = $query->row_array();
@@ -63,14 +107,14 @@ class M_pelanggan extends CI_Model
             if ($number >= 999) {
                 return false;
             }
-            $zero = 'P';
+            $zero = '0';
             for ($i = strlen($number); $i < 3; $i++) {
                 $zero .= '0';
             }
             return $zero . $number;
         } else {
             // create new number
-            return 'P001';
+            return '0001';
         }
     }
 
@@ -104,9 +148,32 @@ class M_pelanggan extends CI_Model
         return $this->db->query($query, $where);
     }
     //delete pelanggan dari transaksi
-    public function delete_pelanggan_transaksi($where)
+    public function delete_user_pelanggan($where)
+    {
+        $query = "DELETE FROM user_table WHERE user_id = ?";
+        return $this->db->query($query, $where);
+    }
+    // delet[e transaksi
+    public function delete_user_transaksi($where)
     {
         $query = "DELETE FROM transaksi WHERE id_pelanggan = ?";
         return $this->db->query($query, $where);
+    }
+
+    //input user 
+    public function insert_user($params)
+    {
+        return $this->db->insert('user_table', $params);
+    }
+    // update user
+    public function update_user($params, $where)
+    {
+        return $this->db->update('user_table', $params, $where);
+    }
+
+    //insert role user
+    public function insert_user_role($params)
+    {
+        return $this->db->insert('user_role_table', $params);
     }
 }

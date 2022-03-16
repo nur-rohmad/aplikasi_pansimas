@@ -8,8 +8,7 @@ use PhpOffice\PhpSpreadsheet\Style\Alignment;
 
 //dom pdf 
 use Dompdf\Dompdf;
-
-
+use FontLib\Table\Type\post;
 
 class Transaksi extends CI_Controller
 {
@@ -20,6 +19,9 @@ class Transaksi extends CI_Controller
         $this->load->model('operator/M_transaksi');
         $this->load->model('operator/M_pelanggan');
         $this->load->library('form_validation');
+        cek_login();
+        //mengontrol hak akses user
+        check_admin();
     }
 
 
@@ -48,14 +50,14 @@ class Transaksi extends CI_Controller
             ];
             //proses insert
             if ($this->M_transaksi->insert_tagihan($params)) {
-                $this->session->set_flashdata('success_tagihan', 'Data Berhasil disimpan');
+                $this->session->set_flashdata('success_tagihan', 'Data Tagihan Berhasil disimpan');
                 redirect('operator/transaksi');
             } else {
                 $this->session->set_flashdata('gagal', 'Data Gagal disimpan');
             }
         }
         //default page
-        redirect('pelanggan/transaksi/add_tagihan');
+        redirect('operator/transaksi/add_tagihan');
     }
 
     public function edit_tagihan($id_tagihan)
@@ -90,7 +92,7 @@ class Transaksi extends CI_Controller
             }
         }
         //default page
-        redirect('pelanggan/transaksi/add_tagihan');
+        redirect('operat[or/transaksi/edit_tagihan/' . $this->input->post('id_tagihan'));
     }
 
     // delete tagihan
@@ -150,9 +152,11 @@ class Transaksi extends CI_Controller
         if ($this->session->userdata('user') == null) {
             redirect('login');
         }
+
         $this->load->view('templete/header');
         $this->load->view('templete/navbar');
         $data['user_data'] = $this->session->userdata('user');
+        $data['total_transaksi'] = $this->M_transaksi->get_total_data();
         $this->load->view('templete/side_bar', $data);
         $data['tagihan'] = $this->M_transaksi->get_all_tagihan();
         $data['transaksi'] = $this->M_transaksi->get_all_transaksi();
@@ -169,57 +173,12 @@ class Transaksi extends CI_Controller
         $this->load->view('templete/navbar');
         $data['user_data'] = $this->session->userdata('user');
         $this->load->view('templete/side_bar', $data);
-        $data['pelanggan'] = $this->M_pelanggan->get_all_pelanggan();
-        $data['harga_permeter'] = $this->M_transaksi->get_harga_permeter();
-        $data['harga_abunemen'] = $this->M_transaksi->get_harga_abunemen();
+        $data['pelanggan'] = $this->M_transaksi->get_pelanggan_transaksi();
         $this->load->view('operator/transaksi/add', $data);
         $this->load->view('templete/footer');
     }
 
-    public function penyebut($nilai)
-    {
-        $nilai = abs($nilai);
-        $huruf = array("", "satu", "dua", "tiga", "empat", "lima", "enam", "tujuh", "delapan", "sembilan", "sepuluh", "sebelas");
-        $temp = "";
-        if ($nilai < 12) {
-            $temp = " " . $huruf[$nilai];
-        } else if ($nilai < 20) {
-            $temp = $this->penyebut($nilai - 10) . " belas";
-        } else if ($nilai < 100) {
-            $temp = $this->penyebut($nilai / 10) . " puluh" . $this->penyebut($nilai % 10);
-        } else if ($nilai < 200) {
-            $temp = " seratus" . $this->penyebut($nilai - 100);
-        } else if ($nilai < 1000) {
-            $temp = $this->penyebut($nilai / 100) . " ratus" . $this->penyebut($nilai % 100);
-        } else if ($nilai < 2000) {
-            $temp = " seribu" . $this->penyebut($nilai - 1000);
-        } else if ($nilai < 1000000) {
-            $temp = $this->penyebut($nilai / 1000) . " ribu" . $this->penyebut($nilai % 1000);
-        } else if ($nilai < 1000000000) {
-            $temp = $this->penyebut($nilai / 1000000) . " juta" . $this->penyebut($nilai % 1000000);
-        } else if ($nilai < 1000000000000) {
-            $temp = $this->penyebut($nilai / 1000000000) . " milyar" . $this->penyebut(fmod($nilai, 1000000000));
-        } else if ($nilai < 1000000000000000) {
-            $temp = $this->penyebut($nilai / 1000000000000) . " trilyun" . $this->penyebut(fmod($nilai, 1000000000000));
-        }
-        return $temp;
-    }
 
-    function terbilang($nilai)
-    {
-        if ($nilai < 0) {
-            $hasil = "minus " . trim($this->penyebut($nilai));
-        } else {
-            $hasil = trim($this->penyebut($nilai));
-        }
-        return $hasil;
-    }
-
-    // public function totsl_semua($end_meter){
-    //     $id_pelanggan = $this->input->post('nama_pelanggan', TRUE);
-
-    // }
-    //get start meter pelanggan
 
     public function get_total_meteran($end_metter)
     {
@@ -251,36 +210,28 @@ class Transaksi extends CI_Controller
         // die;
         //  var_dump($this->get_total_meteran($this->input->post('end_meteran', TRUE)),  number_format($this->biaya_pemakaian(),2,',','.'), number_format($this->total_bayar(),2,',','.'));
         //  die;
+        $this->form_validation->set_message('required', '{field} Harus Diisi');
         $this->form_validation->set_rules('nama_pelanggan', 'Nama Pelanggan', 'required');
         $this->form_validation->set_rules('end_meteran', 'Meteran Sekarang', 'required');
-        $sudah_transaksi = $this->M_transaksi->selesksi_pelanggan();
-        $selesksi = "";
-        foreach ($sudah_transaksi as $data) {
-            $data_selesksi = $data['id_pelanggan'];
-            $selesksi .= $data_selesksi . " ";
-        }
-        $arr_seleksi = explode(" ", $selesksi);
-        // die;var_dump($arr_seleksi);
 
 
-        $id_pelanggan = $this->input->post('nama_pelanggan', TRUE);
-        $start_meter = $this->M_transaksi->get_start_meter($id_pelanggan);
-        $end_meteran = $this->input->post('end_meteran', TRUE);
-        $jumlah_meteran = $this->get_total_meteran($end_meteran);
-        $biaya_pemakaian = $this->biaya_pemakaian($jumlah_meteran);
-        $total_bayar1 = $this->total_bayar($biaya_pemakaian);
 
 
-        if ($this->form_validation->run()) {
-            if (in_array($id_pelanggan, $arr_seleksi)) {
-                $this->session->set_flashdata('success_transaksi', 'Tagihan pelanggan Pada Bulan Ini Telah Dibuat');
-                redirect('operator/transaksi/add_transaksi');
-            }
+
+        if ($this->form_validation->run() !== FALSE) {
+            $id_pelanggan = $this->input->post('nama_pelanggan', TRUE);
+            $start_meter = $this->M_transaksi->get_start_meter($id_pelanggan);
+            $end_meteran = $this->input->post('end_meteran', TRUE);
+            $jumlah_meteran = $this->get_total_meteran($end_meteran);
+            $biaya_pemakaian = $this->biaya_pemakaian($jumlah_meteran);
+            $total_bayar1 = $this->total_bayar($biaya_pemakaian);
+
             $params = [
                 "id_transaksi" => $this->M_transaksi->get_transaksi_last_id(),
                 "id_pelanggan" => $this->input->post('nama_pelanggan', TRUE),
                 "start_meter" => $start_meter['end_meter'],
                 "end_meter" => $this->input->post('end_meteran'),
+                "status_pembayaran" => "belum_bayar",
                 "jumlah_meteran" => $jumlah_meteran,
                 "total_bayar" => $total_bayar1,
                 "biaya_pemakaian" => $biaya_pemakaian,
@@ -294,18 +245,26 @@ class Transaksi extends CI_Controller
                 $where = ["id_pelanggan" => $this->input->post('nama_pelanggan', TRUE)];
 
                 if ($this->M_transaksi->update_stand_meter($params, $where)) {
-                    $this->session->set_flashdata('success_transaksi', 'Data Berhasil di simpan');
+                    $this->session->set_flashdata('success_transaksi', 'Data Transaksi Berhasil di simpan');
                     redirect('operator/transaksi');
                 } else {
-                    $this->session->set_flashdata('success_transaksi', 'Data Gagal dihapusn U');
+                    $this->session->set_flashdata('gagal_transaksi', 'Data Gagal dihapusn U');
                 }
             } else {
-                $this->session->set_flashdata('success_transaksi', 'Data Gagal dihapus I');
+                $this->session->set_flashdata('gagal_transaksi', 'Data Gagal dihapus I');
             }
         } else {
-            $this->session->set_flashdata('success_transaksi', 'Semua Form Harus diisi');
+            $this->session->set_flashdata('gagal_transaksi', 'Data Gagal Disimpan');
+            $this->session->set_flashdata('pesan_eror', validation_errors('<li>', '</li>'));
+            $this->load->view('templete/header');
+            $this->load->view('templete/navbar');
+            $data['user_data'] = $this->session->userdata('user');
+            $this->load->view('templete/side_bar', $data);
+            $data['pelanggan'] = $this->M_transaksi->get_pelanggan_transaksi();
+            $this->load->view('operator/transaksi/add', $data);
+            $this->load->view('templete/footer');
         }
-        redirect('operator/transaksi/add_transaksi');
+        // redirect('operator/transaksi/add_transaksi');
     }
 
 
@@ -317,6 +276,53 @@ class Transaksi extends CI_Controller
         $data['biaya_abunemen'] = $this->M_transaksi->get_harga_abunemen();
         $data['transaksi'] = $this->M_transaksi->get_data_print($id_transaksi);
         $this->load->view('operator/transaksi/print', $data);
+    }
+
+    // donwload nota
+    public function cetak_nota($id_transaksi)
+    {
+        // instantiate and use the dompdf class
+        $dompdf = new Dompdf();
+        $data['biaya_meter'] = $this->M_transaksi->get_harga_permeter();
+        $data['biaya_abunemen'] = $this->M_transaksi->get_harga_abunemen();
+        $data['transaksi'] = $this->M_transaksi->get_data_print($id_transaksi);
+        $transaksi = $this->M_transaksi->get_data_print($id_transaksi);
+        $view = $this->load->view('operator/transaksi/nota', $data, true);
+        $dompdf->loadHtml($view);
+
+        // (Optional) Setup the paper size and orientation
+        $dompdf->setPaper(array('0', '0', '390', '450'), 'potrat');
+
+        // Render the HTML as PDF
+        $dompdf->render();
+
+        // Output the generated PDF to Browser
+        $dompdf->stream("Tagihan Bulan" . format_indo($transaksi['tanggal_transaksi']) . " .pdf", array("Attachment" => false));
+    }
+
+    // cetak semua nota
+    public function cetak_semua_nota()
+    {
+
+        $halaman_awal = $this->input->post('page_awal');
+        $halaman_akhir = $this->input->post('page_akhir');
+        // instantiate and use the dompdf class
+        $dompdf = new Dompdf();
+        $data['biaya_meter'] = $this->M_transaksi->get_harga_permeter();
+        $data['biaya_abunemen'] = $this->M_transaksi->get_harga_abunemen();
+        $data['transaksi'] = $this->M_transaksi->get_all_print(array((int)$halaman_awal - 1, (int)$halaman_akhir));
+        //  $transaksi = $this->M_transaksi->get_data_print($id_transaksi);
+        $view = $this->load->view('operator/transaksi/nota_full', $data, true);
+        $dompdf->loadHtml($view);
+
+        // (Optional) Setup the paper size and orientation
+        $dompdf->setPaper(array('0', '0', '390', '450'), 'potrat');
+
+        // Render the HTML as PDF
+        $dompdf->render();
+
+        // Output the generated PDF to Browser
+        $dompdf->stream("Tagihan Bulan" . format_indo(date('Y-m-d')) . " .pdf", array("Attachment" => false));
     }
 
     public function cetak_laporan_bulanan()
@@ -365,19 +371,19 @@ class Transaksi extends CI_Controller
             if ($this->M_transaksi->delete_transaksi($where)) {
                 $where = ["id_pelanggan" => $id_pelanggan];
                 if ($this->M_transaksi->update_stand_meter($params, $where)) {
-                    $this->session->set_flashdata('success_transaksi', 'Data Berhasil di simpan');
+                    $this->session->set_flashdata('success_delete_transaksi', 'Data Transaksi Berhasil di Hapus');
                     redirect('operator/transaksi');
                 } else {
-                    $this->session->set_flashdata('success_transaksi', 'Data Stand meter gagal diupdate');
+                    $this->session->set_flashdata('gagal_delete_transaksi', 'Data Stand meter gagal diupdate');
                 }
             } else {
-                $this->session->set_flashdata('success_transaksi', 'Data Stand meter gagal diupdate');
+                $this->session->set_flashdata('gagal_delete_transaksi', 'Data Stand meter gagal diupdate');
             }
         } else {
-            $this->session->set_flashdata('success_transaksi', 'Data Id pelanggan kosong');
+            $this->session->set_flashdata('gagal_delete_transaksi', 'Data Id pelanggan kosong');
         }
 
-        redirect('operator/transaksi');
+        redirect('operator/transaksi/delete_transaksi/' . $this->input->post('id_transaksi', TRUE));
     }
 
     public function export_excel()

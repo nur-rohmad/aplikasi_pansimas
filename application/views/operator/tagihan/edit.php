@@ -41,11 +41,18 @@
 
          <div class="card card-dark">
            <div class="card-header">
-             <h3 class="card-title">Edit Tagihan</h3>
+             <div class="row">
+               <div class="col-6 mt-2">
+                 <h3 class="card-title">Edit Transaksi</h3>
+               </div>
+               <div class="col-6 text-right">
+                 <a href="<?= base_url('operator/transaksi') ?>" class="btn btn-danger "><i class="fas fa-chevron-left mr-2"></i>Kembali</a>
+               </div>
+             </div>
            </div>
            <!-- /.card-header -->
            <!-- form start -->
-           <form action="<?= base_url('operator/transaksi/procces_delete_transaksi') ?>" method="POST">
+           <form action="<?= base_url('operator/transaksi/procces_edit_tagihan') ?>" method="POST">
              <div class="card-body">
                <input type="hidden" class="form-control" value="<?= $tagihan['id_tagihan'] ?>" id="id_tagihan" name="id_tagihan" placeholder="Masukkan Kode Tagihan" />
 
@@ -62,8 +69,8 @@
                <!-- /.card-body -->
 
                <div class="card-footer">
-                 <button type="submit" class="btn btn-success float-right"><i class="fas fa-arrow-up mr-1"></i>Simpan</button>
-                 <a class="btn btn-dark" href="<?= base_url('operator/transaksi') ?>"><i class="fas fa-arrow-left mr-1"></i>Back</a>
+                 <button type="submit" class="btn btn-success float-right"><i class="fas fa-check mr-2"></i>Simpan</button>
+                 <button type="reset" class="btn btn-outline-dark float-right mr-2"><i class="fas fa-redo mr-1"></i> Reset</button>
                </div>
            </form>
          </div>

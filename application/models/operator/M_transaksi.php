@@ -83,6 +83,34 @@ class M_transaksi extends CI_Model
             return 0;
         }
     }
+    //get all transaksi
+    public function get_all_print($params)
+    {
+        $sql = "SELECT a.tanggal_transaksi, a.id_pelanggan ,a.jumlah_meteran,a.total_bayar,a.biaya_pemakaian,a.tanggal_transaksi, b.name_pelanggan, b.rw_pelanggan, b.rt_pelanggan, a.start_meter, a.end_meter FROM transaksi a JOIN pelanggan b on a.id_pelanggan = b.id_pelanggan WHERE MONTH(a.tanggal_transaksi) = MONTH(now()) LIMIT ? ,?";
+        $query = $this->db->query($sql, $params);
+        if ($query->num_rows() > 0) {
+            $result = $query->result_array();
+            $query->free_result();
+            return $result;
+        } else {
+            return 0;
+        }
+    }
+
+
+    // get total data
+    public function get_total_data()
+    {
+        $sql = "SELECT count(id_transaksi) as 'total' from transaksi where MONTH(tanggal_transaksi) = MONTH(now())";
+        $query = $this->db->query($sql);
+        if ($query->num_rows() > 0) {
+            $result = $query->row_array();
+            $query->free_result();
+            return $result['total'];
+        } else {
+            return 0;
+        }
+    }
 
     // get start meter pelanggan
     public function get_start_meter($id_pelanggan)
@@ -240,6 +268,21 @@ class M_transaksi extends CI_Model
         } else {
             return array();
         }
+    }
+
+    // get pelanggan belum transaksi bulan ini
+    function get_pelanggan_transaksi()
+    {
+        $sql = "SELECT * FROM pelanggan a WHERE id_pelanggan NOT IN (SELECT b.id_pelanggan FROM transaksi b WHERE MONTH(b.tanggal_transaksi) = MONTH(NOW()))";
+        $query = $this->db->query($sql);
+        if ($query->num_rows() > 0) {
+            $result = $query->result_array();
+            $query->free_result();
+            return $result;
+        } else {
+            return array();
+        }
+        # code...
     }
 
 

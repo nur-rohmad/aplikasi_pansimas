@@ -38,63 +38,74 @@
          <div class="card">
              <div class="card-header mt-2">
                  <h3 class="card-title">Tabel Pelanggan</h3>
-                 <a class="btn btn-success float-right" href="<?= base_url('operator/pelanggan/add_pelanggan') ?>"><i class="fas fa-plus mr-1"></i> Add</a>
-                 <a class="btn btn-dark float-right mr-2" href="<?= base_url('operator/pelanggan/export_excel') ?>"><i class="fas fa-file-excel"></i> Export Excel</a>
-                 <a class="btn btn-primary float-right mr-1" href="<?= base_url('operator/pelanggan/cetak_pelanggan') ?>"><i class="fas fa-print mr-1"></i> Cetak </a>
+                 <div class="button d-none d-xl-block">
+                     <a class="btn btn-success float-right" href="<?= base_url('operator/pelanggan/step_akun') ?>"><i class="fas fa-plus mr-1"></i> Add</a>
+                     <a class="btn btn-dark float-right mr-2" href="<?= base_url('operator/pelanggan/export_excel') ?>"><i class="fas fa-file-excel"></i> Export Excel</a>
+                     <a class="btn btn-primary float-right mr-1" href="<?= base_url('operator/pelanggan/cetak_pelanggan') ?>"><i class="fas fa-print mr-1"></i> Cetak </a>
+                 </div>
+                 <div class="dropdown float-right d-block d-xl-none">
+                     <button class="btn btn-success dropdown-toggle" type="button" id="dropdownMenuButton" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                         Action
+                     </button>
+                     <div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
+                         <a class="dropdown-item" href="<?= base_url('operator/pelanggan/step_akun') ?>"><i class="fas fa-plus mr-1"></i> Add</a>
+                         <a class="dropdown-item " href="<?= base_url('operator/pelanggan/export_excel') ?>"><i class="fas fa-file-excel"></i> Export Excel</a>
+                         <a class="dropdown-item " href="<?= base_url('operator/pelanggan/cetak_pelanggan') ?>"><i class="fas fa-print mr-1"></i> Cetak </a>
+                     </div>
+                 </div>
              </div>
              <!-- motifikasi -->
              <?php
                 if ($this->session->FlashData('success')) {
                 ?>
-                 <div class="alert alert-success alert-dismissible fade show" role="alert">
-                     <?= $this->session->FlashData('success') ?>
-                     <button type="button" class="close" data-dismiss="alert" aria-label="Close">
-                         <span aria-hidden="true">&times;</span>
-                     </button>
-                 </div>
+                 <script>
+                     Swal.fire("Sukses", "<?= $this->session->FlashData('success') ?>", "success");
+                 </script>
              <?php
                 }
                 ?>
              <!-- end notifikasi -->
              <div class="card-body">
-                 <table class="table table-bordered" id="myTable2">
-                     <thead>
-                         <tr>
-                             <th class="text-center" widht="10%">No</th>
-                             <th class="text-center">ID Pelanggan</th>
-                             <th class="text-center">Nama Pelanggan</th>
-                             <th class="text-center">RW</th>
-                             <th class="text-center">RT</th>
-                             <th class="text-center" width="20%">Action</th>
-                         </tr>
-                     </thead>
-                     <tbody>
-                         <?php if ($pelanggan != null) : ?>
-                             <?php $i = 1; ?>
-                             <?php foreach ($pelanggan as $data) : ?>
-                                 <tr>
-                                     <td class="text-center"><?= $i; ?></td>
-                                     <td><?= $data['id_pelanggan']; ?></td>
-                                     <td><?= $data['name_pelanggan']; ?></td>
-                                     <td class="text-center"> BINTOYO 0<?= $data['rw_pelanggan']; ?></td>
-                                     <td class="text-center"><?= $data['rt_pelanggan']; ?></td>
-                                     <td class="text-center">
-                                         <a href="<?= base_url('operator/pelanggan/edit_pelanggan/') . $data['id_pelanggan'] ?>" class="btn btn-sm btn-info"><i class="fas fa-edit mr-1"></i>edit</a>
-                                         <a href="<?= base_url('operator/pelanggan/delete_pelanggan/') . $data['id_pelanggan'] ?>" class="btn btn-sm btn-danger"><i class="fas fa-trash-alt mr-1"></i>hapus</a>
+                 <div class="table-responsive">
+                     <table class="table table-bordered" id="myTable2">
+                         <thead>
+                             <tr>
+                                 <th class="text-center" widht="10%">No</th>
+                                 <th class="text-center">ID Pelanggan</th>
+                                 <th class="text-center">Nama Pelanggan</th>
+                                 <th class="text-center">RW</th>
+                                 <th class="text-center">RT</th>
+                                 <th class="text-center" width="20%">Action</th>
+                             </tr>
+                         </thead>
+                         <tbody>
+                             <?php if ($pelanggan != null) : ?>
+                                 <?php $i = 1; ?>
+                                 <?php foreach ($pelanggan as $data) : ?>
+                                     <tr>
+                                         <td class="text-center"><?= $i; ?></td>
+                                         <td><?= $data['id_pelanggan']; ?></td>
+                                         <td><?= $data['name_pelanggan']; ?></td>
+                                         <td class="text-center"> BINTOYO 0<?= $data['rw_pelanggan']; ?></td>
+                                         <td class="text-center"><?= $data['rt_pelanggan']; ?></td>
+                                         <td class="text-center">
+                                             <a href="<?= base_url('operator/pelanggan/step_akun/') . $data['user_id'] ?>" class="btn btn-sm btn-info"><i class="fas fa-edit mr-1"></i>edit</a>
+                                             <a href="<?= base_url('operator/pelanggan/delete_pelanggan/') . $data['id_pelanggan'] ?>" class="btn btn-sm btn-danger"><i class="fas fa-trash-alt mr-1"></i>hapus</a>
+                                         </td>
+                                     </tr>
+                                     <?php $i++; ?>
+                                 <?php endforeach; ?>
+                             <?php else : ?>
+                                 <tr class="text-center">
+                                     <td colspan="5">
+                                         <i class="fas fa-folder-open fa-2x mt-2"></i>
+                                         <p>Data Tidak di Temukan</p>
                                      </td>
                                  </tr>
-                                 <?php $i++; ?>
-                             <?php endforeach; ?>
-                         <?php else : ?>
-                             <tr class="text-center">
-                                 <td colspan="5">
-                                     <i class="fas fa-folder-open fa-2x mt-2"></i>
-                                     <p>Data Tidak di Temukan</p>
-                                 </td>
-                             </tr>
-                         <?php endif; ?>
-                     </tbody>
-                 </table>
+                             <?php endif; ?>
+                         </tbody>
+                     </table>
+                 </div>
              </div>
          </div>
      </div>

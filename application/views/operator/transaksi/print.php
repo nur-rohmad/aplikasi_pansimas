@@ -9,6 +9,27 @@
             </div>
         </div>
     </div>
+    <!-- <table width="100%">
+        <tr>
+            <td align="center">Struk Pembayaran Tagihan Air</td>
+        </tr>
+        <tr>
+            <td align="center">KP - SPAMS Panguripan Desa Bintoyo</td>
+        </tr>
+        <tr>
+            <td align="center">
+                Jln. Pandawa No. 16 Ds. Bintoyo
+            </td>
+        </tr>
+        <tr>
+            <td align="center">
+
+                Telp. 0863736267278
+
+            </td>
+        </tr>
+    </table> -->
+    <br>
     <div class="row tabel ml-2">
         <table>
             <tr>
@@ -21,13 +42,17 @@
             </tr>
             <tr>
                 <td class="label">Alamat</td>
-                <td>: BINTOYO , RW. 0<?= $transaksi['rw_pelanggan']; ?>,
+                <td>: BINTOYO ,
+            </tr>
+            <tr>
+                <td></td>
+                <td style="padding-left: 1em;">RW. 0<?= $transaksi['rw_pelanggan']; ?>,
                     <?php if ($transaksi['rt_pelanggan'] >= 10) : ?>
                         RT. <?= $transaksi['rt_pelanggan']; ?>
                     <?php else : ?>
                         RT. 0<?= $transaksi['rt_pelanggan']; ?>
                 </td>
-            <?php endif; ?>
+            <?php endif; ?></td>
             </tr>
             <tr>
                 <td class="label">Tagihan Bulan</td>
@@ -73,6 +98,14 @@
 </div>
 
 <style>
+    @page {
+        margin: 0px;
+    }
+
+    .content {
+        margin: 0px;
+    }
+
     @font-face {
         font-family: 'minisystem';
         src: url('<?= base_url('resource/adminlte31/font/minisystem.ttf') ?>');

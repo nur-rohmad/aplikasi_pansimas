@@ -38,48 +38,62 @@
      <div class="row ">
        <!-- left column -->
        <div class="col-md-12">
-         <?php
-          if ($this->session->FlashData('success_transaksi')) {
-          ?>
-           <div class="alert alert-danger alert-dismissible fade show" role="alert">
-             <?= $this->session->FlashData('success_transaksi') ?>
-             <button type="button" class="close" data-dismiss="alert" aria-label="Close">
-               <span aria-hidden="true">&times;</span>
-             </button>
-           </div>
-         <?php
-          }
-          ?>
+
          <div class="card card-dark">
            <div class="card-header">
-             <h3 class="card-title">Add Transaksi</h3>
+             <div class="row">
+               <div class="col-6 mt-2">
+                 <h3 class="card-title">Tambah Transaksi</h3>
+               </div>
+               <div class="col-6 text-right">
+                 <a href="<?= base_url('operator/transaksi') ?>" class="btn btn-danger "><i class="fas fa-chevron-left mr-2"></i>Kembali</a>
+               </div>
+             </div>
            </div>
            <!-- /.card-header -->
            <!-- form start -->
+
            <form action="<?= base_url('operator/transaksi/procces_add_transaksi') ?>" method="POST">
              <div class="card-body">
+               <?php
+                if ($this->session->FlashData('gagal_transaksi')) {
+                ?>
+                 <div class="alert alert-danger alert-dismissible fade show" role="alert">
 
+                   <?= $this->session->FlashData('gagal_transaksi') ?>
+                   <ul>
+                     <?= $this->session->FlashData('pesan_eror') ?>
+                   </ul>
+                   <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+                     <span aria-hidden="true">&times;</span>
+                     <span class="sr-only">Close</span>
+                   </button>
+                 </div>
+
+               <?php
+                }
+                ?>
                <div class="form-group">
                  <label>Nama Pelanggan</label>
                  <select class="form-control select-2" data-placeholder="Masukkan Nama Pelanggan" name="nama_pelanggan" id="nama_pelanggan">
                    <option value=""></option>
                    <?php foreach ($pelanggan as $nama) : ?>
-                     <option value="<?= $nama['id_pelanggan']; ?>"><?= $nama['id_pelanggan']; ?> - <?= $nama['name_pelanggan']; ?></option>
+                     <option value="<?= $nama['id_pelanggan']; ?>" <?php echo set_value('nama_pelanggan') == $nama['id_pelanggan'] ? 'selected' : '' ?>><?= $nama['id_pelanggan']; ?> - <?= $nama['name_pelanggan']; ?></option>
                    <?php endforeach; ?>
                  </select>
                </div>
 
                <div class="form-group">
                  <label for="selectPortal">Metteran Sekarang </label>
-                 <input type="number" class="form-control" id="end_meteran" name="end_meteran" placeholder="Masukkan Metteran Sekarang" />
+                 <input type="number" class="form-control" id="end_meteran" name="end_meteran" value="<?= set_value('end_meteran') ?>" placeholder="Masukkan Metteran Sekarang" />
                </div>
 
              </div>
              <!-- /.card-body -->
 
              <div class="card-footer">
-               <button type="submit" class="btn btn-success float-right"><i class="fas fa-arrow-up mr-1"></i>Simpan</button>
-               <a class="btn btn-dark" href="<?= base_url('operator/transaksi') ?>"><i class="fas fa-arrow-left mr-1"></i>Back</a>
+               <button type="submit" class="btn btn-success float-right"><i class="fas fa-check mr-2"></i>Simpan</button>
+               <button type="reset" class="btn btn-outline-dark float-right mr-2"><i class="fas fa-redo mr-1"></i> Reset</button>
              </div>
            </form>
          </div>

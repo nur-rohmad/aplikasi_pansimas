@@ -1,5 +1,6 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
   <meta charset="utf-8">
   <link rel="icon" href="<?= base_url('resource/adminlte31/') ?>/img/pansimas.jpeg ">
@@ -20,7 +21,11 @@
   <!-- data tabel -->
   <link rel="stylesheet" href="<?= base_url('resource/adminlte31/'); ?>plugins/datatables-bs4/css/dataTables.bootstrap4.min.css">
   <link rel="stylesheet" href="<?= base_url('resource/adminlte31/'); ?>plugins/datatables-buttons/css/buttons.bootstrap4.css">
-</head>
-<body class="hold-transition login-page">
-    <!-- Site wrapper -->
 
+  <!-- swert alert -->
+  <link rel="stylesheet" href="<?= base_url('resource/adminlte31/'); ?>plugins/sweetalert2/sweetalert2.min.css">
+  <script src="<?= base_url('resource/adminlte31/'); ?>plugins/sweetalert2/sweetalert2.min.js"></script>
+</head>
+
+<body class="hold-transition login-page">
+  <!-- Site wrapper -->

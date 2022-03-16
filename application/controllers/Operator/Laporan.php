@@ -11,6 +11,10 @@ class Laporan extends CI_Controller
     //load model
     $this->load->model('operator/M_laporan');
     $this->load->library('form_validation');
+    // cek apakah user sudah login
+    cek_login();
+    //mengontrol hak akses user
+    check_admin();
   }
 
   public function index()

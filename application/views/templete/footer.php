@@ -1,7 +1,5 @@
 <!-- Control Sidebar -->
-<aside class="control-sidebar control-sidebar-dark">
-  <!-- Control sidebar content goes here -->
-</aside>
+
 <!-- /.control-sidebar -->
 
 <footer class="main-footer">
@@ -37,17 +35,46 @@
 <script src="<?= base_url('resource/adminlte31/') ?>plugins/jszip/jszip.min.js"></script>
 <script src="<?= base_url('resource/adminlte31/') ?>plugins/pdfmake/pdfmake.min.js"></script>
 <script src="<?= base_url('resource/adminlte31/') ?>plugins/pdfmake/vfs_fonts.js"></script>
+
+
 <script>
   $(document).ready(function() {
     var table = $("#myTable").DataTable({
+      "language": {
+        "decimal": "",
+        "emptyTable": "Tidak ada data yang tersedia",
+        "info": "Menampilkan _START_ - _END_ dari _TOTAL_ data",
+        "infoEmpty": "Menampilkan 0 - 0 dari 0 data",
+        "infoFiltered": "(Berhasil memfilter dari _MAX_ data)",
+        "infoPostFix": "",
+        "thousands": ",",
+        "lengthMenu": "Tampilkan _MENU_ data",
+        "loadingRecords": "Memuat...",
+        "processing": "Memproses...",
+        "search": "Pencarian:",
+        "zeroRecords": `<i class="fas fa-folder-open fa-2x"></i> <p>Tidak ditemukan data yang cocok</p>`,
+        "paginate": {
+          "first": "Pertama",
+          "last": "Terakhir",
+          "next": "Selanjutnya",
+          "previous": "Sebelumnya"
+        },
+      },
+
       dom: 'Bfrtip',
-      // lengthChange: false,
+      lenghtMenu : [
+        [10, 25, 50, -1],
+        ['q','q','e','e']
+      ],
+      // lengthChange: true,
       buttons: [{
           extend: "print",
           text: '<i class="fas fa-print mr-1"></i>Print',
           className: "btn btn-success mr-2",
           title: 'Data  Transaksi KP - SPAMS Panguripan ',
-
+           exportOptions:{
+            columns: ':visible:not(:contains(Action),:contains(No))'
+          }
         },
         {
           extend: "excel",
@@ -55,6 +82,9 @@
           className: "btn btn-primary mr-2",
           filename: 'data_transaksi',
           title: 'Data  Transaksi KP - SPAMS Panguripan ',
+           exportOptions:{
+            columns: ':visible:not(:contains(Action),:contains(No))'
+          }
         },
         {
           extend: "pdf",
@@ -62,17 +92,65 @@
           className: "btn btn-warning mr-2",
           filename: 'data_transaksi',
           title: 'Data  Transaksi KP - SPAMS Panguripan ',
+           exportOptions:{
+            columns: ':visible:not(:contains(Action),:contains(No))'
+          }
         }
       ],
-      "searching": false
+      "searching": true
     });
 
     var table = $("#myTable2").DataTable({
       lengthChange: false,
+      "language": {
+        "decimal": "",
+        "emptyTable": "Tidak ada data yang tersedia",
+        "info": "Menampilkan _START_ - _END_ dari _TOTAL_ data",
+        "infoEmpty": "Menampilkan 0 - 0 dari 0 data",
+        "infoFiltered": "(Berhasil memfilter dari _MAX_ data)",
+        "infoPostFix": "",
+        "thousands": ",",
+        "lengthMenu": "Tampilkan _MENU_ data",
+        "loadingRecords": "Memuat...",
+        "processing": "Memproses...",
+        "search": "Pencarian:",
+        "zeroRecords": `<i class="fas fa-folder-open fa-2x"></i> <p>Tidak ditemukan data yang cocok</p>`,
+        "paginate": {
+          "first": "Pertama",
+          "last": "Terakhir",
+          "next": "Selanjutnya",
+          "previous": "Sebelumnya"
+        },
+      }
+
+    });
+    var table1 = $("#myTable1").DataTable({
+      lengthChange: false,
+      "language": {
+        "decimal": "",
+        "emptyTable": "Tidak ada data yang tersedia",
+        "info": "Menampilkan _START_ - _END_ dari _TOTAL_ data",
+        "infoEmpty": "Menampilkan 0 - 0 dari 0 data",
+        "infoFiltered": "(Berhasil memfilter dari _MAX_ data)",
+        "infoPostFix": "",
+        "thousands": ",",
+        "lengthMenu": "Tampilkan _MENU_ data",
+        "loadingRecords": "Memuat...",
+        "processing": "Memproses...",
+        "search": "Pencarian:",
+        "zeroRecords": `<i class="fas fa-folder-open"></i> Tidak ditemukan data yang cocok`,
+        "paginate": {
+          "first": "Pertama",
+          "last": "Terakhir",
+          "next": "Selanjutnya",
+          "previous": "Sebelumnya"
+        },
+      }
 
     });
 
     // table.buttons().container().appendTo(".col-md-6:eq(0)");
+
   });
 
   //   $(document).ready( function () {
