@@ -68,3 +68,22 @@ Acknowledgement
 
 The CodeIgniter team would like to thank EllisLab, all the
 contributors to the CodeIgniter project and you, the CodeIgniter user.
+
+***************
+Contoh Tampilan Website
+***************
+
+untuk dapat melihat tampilan website ini anda dapat mengakses link berikut :
+https://kpspambintoyo.000webhostapp.com/
+
+dengan menggunakan user sebagai berikut untuk role admin :
+
+username : rohmad
+
+pass  : rohmad123
+
+dengan menggunakan user sebagai berikut untuk role pelanggan :
+
+username : sukadi	
+
+pass  : sukadi123
