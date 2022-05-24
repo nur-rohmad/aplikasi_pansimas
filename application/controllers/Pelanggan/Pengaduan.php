@@ -44,7 +44,7 @@ class Pengaduan extends CI_Controller
         $data['user_data'] = $data_user;
         $data['data_pengaduan'] = $this->M_pengaduan->get_pengaduan_by_user($data_user['user_id']);
         // $data['no_pengaduan'] = $this->M_pengaduan->get_pengaduan_last_id();
-        $no_pengaduan = date("ymd") . rand(0000,10000);
+        $no_pengaduan = date("ymd") . rand(0000, 10000);
         $data['no_pengaduan'] = $no_pengaduan;
         // var_dump($no_pengaduan);
         // die;
@@ -98,6 +98,17 @@ class Pengaduan extends CI_Controller
 
     public function lihat_pengaduan($id_pengaduan)
     {
+        // get sesion
+        $data_user = $this->session->userdata('user');
+        // cek pengaduan user 
+        $cek_pengaduan = $this->db->get_where('pengaduan', [
+            'id_pengaduan' => $id_pengaduan,
+            'pengaduan_by' => $data_user['user_id'],
+        ])->row_array();
+        if ($cek_pengaduan == null) {
+            $this->session->set_flashdata('error_pengaduan', 'Data pengaduan tidak ditemukan');
+            redirect('pelanggan/pengaduan');
+        }
         $params = [
             'read_status_user' => 'sudah_dilihat'
         ];

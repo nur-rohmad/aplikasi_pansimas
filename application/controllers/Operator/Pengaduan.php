@@ -33,6 +33,11 @@ class Pengaduan extends CI_Controller
 
     public function lihat_pengaduan($id_pengaduan)
     {
+        if (!$this->M_pengaduan->pengaduan_by_id($id_pengaduan)) {
+            $this->session->set_flashdata('gagal_pengaduan', 'Data Tidak Ditemukan');
+            redirect('operator/pengaduan');
+        }
+
         $params = [
             'read_status_admin' => 'sudah_dilihat',
         ];

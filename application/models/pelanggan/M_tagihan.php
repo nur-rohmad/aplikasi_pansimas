@@ -71,7 +71,7 @@ class M_tagihan extends CI_Model
     // get transakasi by id
     public function get_transakssi_by_id($transaksi_id)
     {
-        $sql = "SELECT a.*, b.* FROM transaksi a JOIN pelanggan b ON a.id_pelanggan=b.id_pelanggan  where a.id_transaksi = ?";
+        $sql = "SELECT a.*, b.*, c.no_telp, c.email FROM transaksi a JOIN pelanggan b ON a.id_pelanggan=b.id_pelanggan JOIN user_table c ON b.user_id = c.user_id  where a.id_transaksi = ?";
         $query = $this->db->query($sql, $transaksi_id);
         if ($query->num_rows() > 0) {
             $result = $query->row_array();
@@ -102,6 +102,20 @@ class M_tagihan extends CI_Model
         $query = $this->db->query($sql);
         if ($query->num_rows() > 0) {
             $result = $query->result_array();
+            $query->free_result();
+            return $result;
+        } else {
+            return array();
+        }
+    }
+
+    // cek tagihan milik  user
+    public function cek_transasksi($params)
+    {
+        $sql = "SELECT a.id_transaksi FROM transaksi a JOIN pelanggan b ON a.id_pelanggan = b.id_pelanggan WHERE a.id_transaksi = ? AND b.user_id = ?";
+        $query = $this->db->query($sql, $params);
+        if ($query->num_rows() > 0) {
+            $result = $query->row_array();
             $query->free_result();
             return $result;
         } else {

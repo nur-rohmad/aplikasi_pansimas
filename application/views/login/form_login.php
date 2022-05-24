@@ -18,14 +18,26 @@
         <script>
           Swal.fire("Sukses", "<?= $this->session->FlashData('sukses_logout') ?>", "success");
         </script>
-      <?php } ?>
+      <?php } elseif ($this->session->FlashData('success')) { ?>
+        <div class="alert alert-success  alert-dismissible fade show" role="alert">
+
+          <?= $this->session->FlashData('success') ?>
+
+          <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+            <span aria-hidden="true">&times;</span>
+            <span class="sr-only">Close</span>
+          </button>
+        </div>
+
+      <?php }
+      ?> 
 
 
       <p class="login-box-msg">Sign in to start your session</p>
 
       <form action="<?= base_url('login/proccess_login') ?>" method="post">
         <div class="input-group mb-3">
-          <input type="text" required class="form-control" name="user_name" placeholder="User Name">
+          <input type="text" class="form-control" name="user_name" placeholder="User Name">
           <div class="input-group-append">
             <div class="input-group-text">
               <span class="fas fa-user"></span>
@@ -49,7 +61,7 @@
         <!-- /.col -->
     </div>
     </form>
-
+    <a class="text-center mb-4" href="<?= base_url('login/forgotpassword'); ?>">Lupa Password</a>
   </div>
   <!-- /.card-body -->
 </div>

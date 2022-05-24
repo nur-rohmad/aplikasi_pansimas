@@ -39,19 +39,9 @@
              <p>
                Pelanggan
              </p>
-             <!-- <i class="right fas fa-angle-left"></i> -->
-           </a>
-           <!-- <ul class="nav nav-treeview">
-             <li class="nav-item ml-3">
-               <a href="<?= base_url('operator/dashboard') ?>" class="nav-link <?php echo $this->uri->segment(2) == 'dashboard' ? 'active' : '' ?>">
-                 <i class="nav-icon fas fa-tachometer-alt"></i>
-                 <p>
-                   Stan Meter
-                 </p>
-               </a>
-             </li>
 
-           </ul> -->
+           </a>
+
          </li>
 
          <li class="nav-item">
@@ -79,14 +69,14 @@
              </p>
            </a>
          </li>
-        <li class="nav-item">
+         <li class="nav-item">
            <a href="<?= base_url('operator/pengaduan') ?>" class="nav-link <?php echo $this->uri->segment(2) == 'pengaduan' ? 'active' : '' ?>">
              <i class="nav-icon fas fa-phone-alt"></i>
              <p>
                Pengaduan
              </p>
              <?php if (cek_pengaduan() > 0) : ?>
-               <span href="#" class="badge badge-primary right"><?= cek_pengaduan(); ?></span>
+               <span href="#" class="badge badge-<?php echo $this->uri->segment(2) == 'pengaduan' ? 'light' : 'primary' ?> right"><?= cek_pengaduan(); ?></span>
              <?php endif; ?>
            </a>
          </li>

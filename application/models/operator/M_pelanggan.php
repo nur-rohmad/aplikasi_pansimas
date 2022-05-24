@@ -118,6 +118,34 @@ class M_pelanggan extends CI_Model
         }
     }
 
+    // get riwayat tagihan pelanggan
+    public function riwayat_tagihan_pelanggan($id_pelanggan)
+    {
+        $sql = "SELECT * FROM transaksi WHERE id_pelanggan = ?";
+        $query = $this->db->query($sql, $id_pelanggan);
+        if ($query->num_rows() > 0) {
+            $result = $query->result_array();
+            $query->free_result();
+            return $result;
+        } else {
+            return array();
+        }
+    }
+
+    // label grafik pelanggan
+    public function labelChart($id_pelanggan)
+    {
+        $sql = "SELECT a.jumlah_meteran, SUM(a.total_bayar) AS 'jumlah',a.tanggal_transaksi  FROM  transaksi a join pelanggan b on a.id_pelanggan=b.id_pelanggan WHERE a.id_pelanggan = ?   GROUP BY MONTH(a.tanggal_transaksi),YEAR(a.tanggal_transaksi)  ORDER BY YEAR(a.tanggal_transaksi) ,MONTH(a.tanggal_transaksi)  LIMIT 12";
+        $query = $this->db->query($sql, $id_pelanggan);
+        if ($query->num_rows() > 0) {
+            $result = $query->result_array();
+            $query->free_result();
+            return $result;
+        } else {
+            return array();
+        }
+    }
+
     public function insert_stand_meter($params)
     {
         return $this->db->insert('stand_meter_pelanggan', $params);

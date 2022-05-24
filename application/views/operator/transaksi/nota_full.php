@@ -2,19 +2,8 @@
 
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Anton&display=swap" rel="stylesheet">
-<?php foreach ($transaksi as $result) : ?>
-    <div class="content" style="page-break-after:always;">
-        <!-- <div class="row ml-2">
-        <div class="col-sm-8  mt-1 text-center">
-            <p class="mt-2  text-center">Struk Pembayaran Tagihan Air</p><br>
-            <span>KP - SPAMS Panguripan Desa Bintoyo</span><br>
-            <div class="alamat">
-                <span class="ml-5">Jln. Pandawa No. 16 Ds. Bintoyo</span><br>
-                <span class="tlp">Telp. 0863736267278</span>
-            </div>
-        </div>
-    </div> -->
-
+<?php foreach ($transaksi as $key => $result) : ?>
+    <div class="content" style="<?= $key === array_key_last($transaksi) ? "" : "page-break-after:always;"  ?>">
         <table width="100%">
             <tr>
                 <td align="center"><span class="judul">Struk Pembayaran Tagihan Air</span></td>
@@ -36,7 +25,7 @@
             </tr>
         </table>
         <br>
-        <div class="row tabel ">
+        <div class="row tabel">
             <table>
                 <tr>
                     <td class="label">ID Pelanggan</td>

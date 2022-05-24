@@ -51,7 +51,7 @@
                              Pengaduan
                          </p>
                          <?php if (cek_pengaduan() > 0) : ?>
-                             <span href="#" class="badge badge-primary right"><?= cek_pengaduan(); ?></span>
+                             <span href="#" class="badge badge-<?php echo $this->uri->segment(2) == 'pengaduan' ? 'light' : 'primary' ?> right"><?= cek_pengaduan(); ?></span>
                          <?php endif; ?>
                      </a>
                  </li>

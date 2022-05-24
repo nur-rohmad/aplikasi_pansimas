@@ -36,14 +36,18 @@ class Laporan extends CI_Controller
     } else {
       $data['search'] = [
         'bulan' => null,
-        'tahun' => null
+        'tahun' => null,
+        'pelanggan' => null
       ];
     }
+    $pelanggan = empty($search['pelanggan']) ?   "%"  :  $search['pelanggan'];
     $transaksi_bulan = empty($search['bulan']) ?   "%"  :  $search['bulan'];
     $transaksi_tahun = empty($search['tahun']) ? '%'  :  '%' . $search['tahun'] . '%';
-
+    // data pelanggan
+    $data['pelanggan'] = $this->db->get('pelanggan')->result_array();
+    // data bulan 
     $data['bulan'] = ["Januari", "Februari", "Maret", "April", "Mei", "Juni", "Juli", "Agustus", "September", "Oktober", "November", "Desember"];
-    $data['transaksi'] = $this->M_laporan->get_all_transaksi(array($transaksi_bulan, $transaksi_tahun));
+    $data['transaksi'] = $this->M_laporan->get_all_transaksi(array($transaksi_bulan, $transaksi_tahun, $pelanggan));
     // var_dump($data['transaksi']);
     // die;
     $this->load->view('operator/laporan/index', $data);
@@ -56,6 +60,7 @@ class Laporan extends CI_Controller
       $this->session->unset_userdata('transaksi_search');
     } else {
       $params = array(
+        "pelanggan" => $this->input->post("pelanggan"),
         "bulan" => $this->input->post("bulan_transaksi"),
         "tahun" => $this->input->post("tahun_transaksi")
       );

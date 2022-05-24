@@ -8,6 +8,7 @@ class Profil extends CI_Controller
         parent::__construct();
         $this->load->model('operator/M_profil');
         $this->load->library('form_validation');
+        $this->load->library('email');
         // cek apakah user sudah login
         if ($this->session->userdata('user') == NULL) {
             # code...
@@ -53,11 +54,12 @@ class Profil extends CI_Controller
             $pass = $this->input->post('pass');
             $password_hash = password_hash($pass, PASSWORD_DEFAULT);
             $params['user_pass'] = $password_hash;
+            $this->_sendEmail();
         }
 
         if (isset($_FILES['foto_profil'])) {
             $config['upload_path']          = './resource/adminlte31/img/profile';
-            $config['allowed_types']        = 'gif|jpg|png';
+            $config['allowed_types']        = 'gif|jpg|png|jpeg';
             $config['file_name']            = $this->user_id;
             $config['overwrite']            = true;
             // $config['max_size']             = 1024; // 1MB
@@ -110,6 +112,37 @@ class Profil extends CI_Controller
             return $result;
         } else {
             return array();
+        }
+    }
+
+    private function _sendEmail()
+    {
+        $config = [
+            'protocol'  => 'smtp',
+            'smtp_host' => 'ssl://smtp.googlemail.com',
+            'smtp_user' => 'qiliasalmu@gmail.com',
+            'smtp_pass' => 'Youtubepremium456',
+            'smtp_port' => 465,
+            'mailtype'  => 'html',
+            'charset'   => 'utf-8',
+            'newline'   => "\r\n"
+        ];
+
+        $this->email->initialize($config);
+
+        $this->email->from('qiliasalmu@gmail.com', 'pansimas');
+        $this->email->to($this->input->post('email', true));
+        $this->email->subject('Ganti Password');
+        $this->email->message('
+                <h2 >KP-SPAM Desa Bintoyo </h2>
+                <p> Telah dilakukan pergantian password pada ' . format_indo_full(date('Y-m-d')) . ' </p>');
+
+        if ($this->email->send()) {
+            # code...
+            return true;
+        } else {
+            echo $this->email->print_debugger();
+            die;
         }
     }
 }

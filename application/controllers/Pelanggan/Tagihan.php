@@ -3,6 +3,7 @@ defined('BASEPATH') or exit('No direct script access allowed');
 
 //dom pdf 
 use Dompdf\Dompdf;
+use Dompdf\Options;
 use FontLib\Table\Type\post;
 
 class Tagihan extends CI_Controller
@@ -41,10 +42,6 @@ class Tagihan extends CI_Controller
 
     public function index()
     {
-        // $data = $this->M_tagihan->get_transakssi_complete_by_id('T000000001');
-        // $va_numbers = json_decode($data['va_number'], true);
-        // var_dump($va_numbers['bill_key']);
-        // die;
         $this->load->view('templete/header');
         $this->load->view('templete/navbar');
         $data_user = $this->session->userdata('user');
@@ -59,13 +56,20 @@ class Tagihan extends CI_Controller
     // bayar
     public function bayar_tagihan($transaksi_id)
     {
+        // get sesion
+        $data_user = $this->session->userdata('user');
+        // cek tagihan per user
+        $cek_tagihan = $this->M_tagihan->cek_transasksi([
+            'id_transaksi' => $transaksi_id,
+            'user_id' => $data_user['user_id'],
+        ]);
+        if ($cek_tagihan == null) {
+            redirect('pelanggan/tagihan');
+        }
         $this->load->view('templete/header');
         $this->load->view('templete/navbar');
-        $data_user = $this->session->userdata('user');
         $data['user_data'] = $data_user;
         $data['transaksi'] = $this->M_tagihan->get_transakssi_by_id($transaksi_id);
-        // var_dump($data);
-        // die;
         $this->load->view('pelanggan/side_bar', $data);
         $this->load->view('pelanggan/tagihan/bayar.php', $data);
         $this->load->view('templete/footer');
@@ -74,7 +78,6 @@ class Tagihan extends CI_Controller
     //download nota
     public function download_nota($id_transaksi)
     {
-
         $this->load->view('templete/header');
         $data['biaya_meter'] = $this->M_tagihan->get_harga_permeter();
         $data['biaya_abunemen'] = $this->M_tagihan->get_harga_abunemen();
@@ -85,7 +88,18 @@ class Tagihan extends CI_Controller
     //download pdf
     public function download_pdf($id_transaksi)
     {
+        // get sesion
+        $data_user = $this->session->userdata('user');
+        // cek tagihan per user
+        $cek_tagihan = $this->M_tagihan->cek_transasksi([
+            'id_transaksi' => $id_transaksi,
+            'user_id' => $data_user['user_id'],
+        ]);
+        if ($cek_tagihan == null) {
+            redirect('pelanggan/tagihan');
+        }
         // instantiate and use the dompdf class
+
         $dompdf = new Dompdf();
         $data['biaya_meter'] = $this->M_tagihan->get_harga_permeter();
         $data['biaya_abunemen'] = $this->M_tagihan->get_harga_abunemen();
@@ -166,8 +180,8 @@ class Tagihan extends CI_Controller
         $customer_details = array(
             'first_name'    => $pelanggan['name_pelanggan'],
             // 'last_name'     => "Litani",
-            'email'         => "andri@litani.com",
-            'phone'         => "081122334455",
+            'email'         => $pelanggan['email'],
+            'phone'         => $pelanggan['no_telp'],
             // 'billing_address'  => $billing_address,
             // 'shipping_address' => $shipping_address
         );

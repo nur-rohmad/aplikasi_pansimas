@@ -2,6 +2,106 @@
 
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Anton&display=swap" rel="stylesheet">
+<style>
+    @page {
+        margin: 0px;
+    }
+
+    .content {
+        margin: 0px;
+    }
+
+    @font-face {
+        font-family: 'Koulen', cursive;
+        src: url('<?= base_url("resource/font/Koulen-Regular.ttf") ?>');
+
+    }
+
+
+
+    .content {
+        margin-left: 2em;
+        margin-top: 1em;
+        font-family: 'Koulen', cursive;
+    }
+
+
+
+    .garis {
+        margin-top: 0.5em;
+        width: 100px;
+        height: 0px;
+        border-bottom: 1px black solid;
+    }
+
+    .label {
+        padding-right: 2em;
+        padding-left: 1em;
+        padding-top: 0.5em;
+    }
+
+    td {
+        letter-spacing: 2px;
+        /* font-family: 'minisystem'; */
+        /* font-weight: bold; */
+
+    }
+
+
+
+
+
+    .judul {
+        font-size: 20px;
+        font-weight: bold;
+        font-family: Courier;
+
+    }
+
+    .lunas {
+        margin-bottom: -100em;
+        margin-left: 6em;
+        width: 220px;
+        transform: rotate(-30deg);
+        letter-spacing: 25px;
+        padding: 10px;
+        border: 4px solid red;
+        border-style: double;
+        color: red;
+        font-family: 'Anton', sans-serif;
+        font-size: 30px;
+        font-weight: bold;
+        border-radius: 10px;
+        opacity: 0.3;
+    }
+
+    .tgl {
+        font-size: 15px;
+        letter-spacing: 0px;
+    }
+
+    h4 {
+        /* font-family: 'Times New Roman', Times, serif; */
+        font-weight: bold;
+    }
+
+    .garis {
+        width: 100%;
+        background-color: rgba(0, 0, 0, 0.9);
+        height: 1px;
+        color: black;
+        /* margin-top: 0.5em; */
+        /* margin-bottom: 1em; */
+        margin-right: 1em;
+
+    }
+
+
+
+    .tlp {
+        margin-left: 10%;
+    }
+</style>
 <div class="content">
     <!-- <div class="row ml-2">
         <div class="col-sm-8  mt-1 text-center">
@@ -22,7 +122,7 @@
             <td align="center" class="judul">KP - SPAMS Panguripan Desa Bintoyo</td>
         </tr>
         <tr>
-            <td align="center">
+            <td align="center" class="content">
                 Jln. Pandawa No. 16 Ds. Bintoyo
             </td>
         </tr>
@@ -112,118 +212,7 @@
     </div>
 </div>
 
-<style>
-    @page {
-        margin: 0px;
-    }
 
-    .content {
-        margin: 0px;
-    }
-
-    @font-face {
-        font-family: 'minisystem';
-        src: url('<?= base_url('resource/adminlte31/font/minisystem.ttf') ?>');
-    }
-
-    .content {
-        font-family: 'minisystem';
-
-    }
-
-    .content {
-        margin-left: 2em;
-        margin-top: 1em;
-    }
-
-    .row {
-        background-image: url('./resource/adminlte31/img/pansimas.jpeg');
-    }
-
-    .garis {
-        margin-top: 0.5em;
-        width: 100px;
-        height: 0px;
-        border-bottom: 1px black solid;
-    }
-
-    .label {
-        padding-right: 2em;
-        padding-left: 1em;
-        padding-top: 0.5em;
-    }
-
-    td {
-        letter-spacing: 2px;
-        /* font-family: 'minisystem'; */
-        /* font-weight: bold; */
-
-    }
-
-    img {
-        width: 90px;
-        height: 90px;
-    }
-
-    .logo {
-        float: right;
-    }
-
-    .judul {
-        font-size: 20px;
-        font-weight: bold;
-        font-family: 'Times New Roman', Times, serif;
-    }
-
-    .lunas {
-        margin-bottom: -100em;
-        margin-left: 6em;
-        width: 220px;
-        transform: rotate(-30deg);
-        letter-spacing: 25px;
-        padding: 10px;
-        border: 4px solid red;
-        border-style: double;
-        color: red;
-        font-family: 'Anton', sans-serif;
-        font-size: 30px;
-        font-weight: bold;
-        border-radius: 10px;
-        opacity: 0.3;
-    }
-
-    .tgl {
-        font-size: 15px;
-        letter-spacing: 0px;
-    }
-
-    h4 {
-        /* font-family: 'Times New Roman', Times, serif; */
-        font-weight: bold;
-    }
-
-    .garis {
-        width: 100%;
-        background-color: rgba(0, 0, 0, 0.9);
-        height: 1px;
-        color: black;
-        /* margin-top: 0.5em; */
-        /* margin-bottom: 1em; */
-        margin-right: 1em;
-
-    }
-
-    h5 {
-        font-style: italic;
-        /* font-family: 'Times New Roman', Times, serif; */
-        font-size: 20px;
-        font-weight: bold;
-    }
-
-    .tlp {
-        margin-left: 10%;
-    }
-</style>
 <!-- <script>
     window.print()
 </script> -->

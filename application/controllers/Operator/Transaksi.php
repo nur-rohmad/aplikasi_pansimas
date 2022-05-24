@@ -303,14 +303,21 @@ class Transaksi extends CI_Controller
     // cetak semua nota
     public function cetak_semua_nota()
     {
-
         $halaman_awal = $this->input->post('page_awal');
         $halaman_akhir = $this->input->post('page_akhir');
+        // cek page awal dan page alhir
+        if ((int)$halaman_awal > (int)$halaman_akhir) {
+            $this->session->set_flashdata('gagal_delete_transaksi', 'Halaman Akhir Harus Lebih Besar Dari Halaman Awal');
+            redirect('operator/transaksi');
+        }
+        $jumlah_halaman = (int)$halaman_akhir - ((int)$halaman_awal - 1);
+        // var_dump($halaman_awal, $jumlah_halaman);
+        // die;
         // instantiate and use the dompdf class
         $dompdf = new Dompdf();
         $data['biaya_meter'] = $this->M_transaksi->get_harga_permeter();
         $data['biaya_abunemen'] = $this->M_transaksi->get_harga_abunemen();
-        $data['transaksi'] = $this->M_transaksi->get_all_print(array((int)$halaman_awal - 1, (int)$halaman_akhir));
+        $data['transaksi'] = $this->M_transaksi->get_all_print(array((int)$halaman_awal - 1, $jumlah_halaman));
         //  $transaksi = $this->M_transaksi->get_data_print($id_transaksi);
         $view = $this->load->view('operator/transaksi/nota_full', $data, true);
         $dompdf->loadHtml($view);

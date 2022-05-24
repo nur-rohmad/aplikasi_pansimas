@@ -42,6 +42,26 @@
                     <form class="form" action="<?= base_url('operator/laporan/search_process') ?>" method="post">
                         <div class="form-body">
                             <div class="row">
+                                <div class="col-md-3 col-12">
+                                    <div class="form-group my-1">
+                                        <select name="pelanggan" class="form-control select-2">
+                                            <option value="">Pilih Pelanggan</option>
+                                            <?php foreach ($pelanggan as $list_pelanggan) : ?>
+                                                <option value="<?= $list_pelanggan['id_pelanggan'] ?>" <?php
+                                                                                                        if (isset($search['pelanggan'])) {
+                                                                                                            if ($search['pelanggan'] == $list_pelanggan['id_pelanggan']) {
+                                                                                                                echo "selected";
+                                                                                                            } else {
+                                                                                                                echo "";
+                                                                                                            }
+                                                                                                        } else {
+                                                                                                            echo "";
+                                                                                                        }
+                                                                                                        ?>><?= $list_pelanggan['name_pelanggan'] ?></option>
+                                            <?php endforeach; ?>
+                                        </select>
+                                    </div>
+                                </div>
                                 <div class="col-md-2 col-12">
                                     <div class="form-group my-1">
                                         <select name="bulan_transaksi" class="form-control select-2" placeholder="Pilih Jenis">
@@ -63,7 +83,6 @@
                                                                                 ?>>
                                                     <?= $data_bulan; ?></option>
                                             <?php endforeach; ?>
-                                            {/foreach}
                                         </select>
                                     </div>
                                 </div>
@@ -124,7 +143,7 @@
                                                 </tr>
                                                 <?php $i++; ?>
                                             <?php endforeach; ?>
-                                          
+
                                         <?php else : ?>
                                             <tr class="text-center">
                                                 <td colspan="8">
@@ -134,7 +153,7 @@
                                             </tr>
                                         <?php endif; ?>
                                     </tbody>
-                                   
+
                                 </table>
                             </div>
 

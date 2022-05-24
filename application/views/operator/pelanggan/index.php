@@ -62,8 +62,12 @@
                      Swal.fire("Sukses", "<?= $this->session->FlashData('success') ?>", "success");
                  </script>
              <?php
-                }
+                } else if ($this->session->FlashData('gagal')) {
                 ?>
+                 <script>
+                     Swal.fire("Gagal", "<?= $this->session->FlashData('gagal') ?>", "error");
+                 </script>
+             <?php } ?>
              <!-- end notifikasi -->
              <div class="card-body">
                  <div class="table-responsive">
@@ -89,7 +93,8 @@
                                          <td class="text-center"> BINTOYO 0<?= $data['rw_pelanggan']; ?></td>
                                          <td class="text-center"><?= $data['rt_pelanggan']; ?></td>
                                          <td class="text-center">
-                                             <a href="<?= base_url('operator/pelanggan/step_akun/') . $data['user_id'] ?>" class="btn btn-sm btn-info"><i class="fas fa-edit mr-1"></i>edit</a>
+                                             <a href="<?= base_url('operator/pelanggan/detail/') . $data['id_pelanggan'] ?>" class="btn btn-sm btn-primary"><i class="fas fa-eye mr-1"></i>Detail</a>
+                                             <a href="<?= base_url('operator/pelanggan/step_akun/') . $data['user_id'] ?>" class="btn btn-sm btn-info my-2"><i class="fas fa-edit mr-1"></i>edit</a>
                                              <a href="<?= base_url('operator/pelanggan/delete_pelanggan/') . $data['id_pelanggan'] ?>" class="btn btn-sm btn-danger"><i class="fas fa-trash-alt mr-1"></i>hapus</a>
                                          </td>
                                      </tr>

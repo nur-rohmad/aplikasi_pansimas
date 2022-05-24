@@ -2,7 +2,7 @@
 <div class="content-wrapper">
     <!-- Content Header (Page header) -->
     <div class="content-header">
-        <div class="container">
+        <div class="container-fluid">
             <div class="row  mb-5 mr-2">
                 <div class="col-sm-6">
                     <h1>Pembayaran</h1>
@@ -35,10 +35,6 @@
 
     <!-- Main content -->
     <div class="content">
-
-        <!-- tabel transaksi -->
-
-
         <!-- motifikasi -->
         <?php
         if ($this->session->FlashData('success_transaksi')) {
@@ -102,10 +98,7 @@
         <!-- <button id="pay-button">Pay!</button> -->
     </div>
 </div>
-<!-- <form id="payment-form" method="post" action="<?= site_url() ?>/pelanggan/tagihan/finish">
-    <input type="hidden" name="result_type" id="result-type" value="">
-    <input type="hidden" name="result_data" id="result-data" value="">
-</form> -->
+</div>
 
 <!-- <button id="pay-button">Pay!</button> -->
 <script type="text/javascript">

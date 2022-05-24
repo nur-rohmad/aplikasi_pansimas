@@ -8,7 +8,7 @@
                     <h1>Transaksi</h1>
                 </div>
                 <div class="col-sm-6">
-                    <ol class="breadcrumb float-sm-right">
+                    <ol class="breadcrumb float-right">
                         <?php foreach ($this->uri->segments as $segment) : ?>
                             <?php
                             $url = substr($this->uri->uri_string, 0, strpos($this->uri->uri_string, $segment)) . $segment;
@@ -18,7 +18,7 @@
                                 <?php if ($is_active) : ?>
                                     <?php echo ucfirst($segment) ?>
                                 <?php else : ?>
-                                    <a href="<?php echo site_url($url) ?>"><?php echo ucfirst($segment) ?></a>
+                                    <a href="#"><?php echo ucfirst($segment) ?></a>
                                 <?php endif; ?>
                             </li>
                         <?php endforeach; ?>
@@ -38,7 +38,7 @@
         <div class="card">
             <div class="card-header mt-2">
                 <h3 class="card-title text-center">Tabel Tagihan</h3>
-                <a class="btn btn-success float-right" href="<?= base_url('operator/transaksi/add_tagihan') ?>"><i class="fas fa-plus mr-1"></i> Add</a>
+
             </div>
             <!-- motifikasi -->
             <?php
@@ -130,23 +130,27 @@
                     Swal.fire("Sukses", "<?= $this->session->FlashData('success_delete_transaksi') ?>", "success");
                 </script>
             <?php
-            }
+            } else if ($this->session->FlashData('gagal_delete_transaksi')) {
             ?>
+                <script>
+                    Swal.fire("Gagal", "<?= $this->session->FlashData('gagal_delete_transaksi') ?>", "error");
+                </script>
+            <?php } ?>
             <!-- end notifikasi -->
             <div class="card-body">
                 <div class="table-responsive">
                     <table class="table table-bordered" id="myTable2">
                         <thead>
                             <tr>
-                                <th class="text-center" widht="10%">No</th>
+                                <th class="text-center align-middle" widht="10%">No</th>
                                 <th class="text-center">ID Pelanggan</th>
                                 <th class="text-center">Nama Pelanggan</th>
                                 <th class="text-center">Bulan Tagihan</th>
-                                <th class="text-center">Start Meter</th>
-                                <th class="text-center">End Meter</th>
+                                <th class="text-center">Meteran Awal</th>
+                                <th class="text-center">Meteran Akhir</th>
                                 <th class="text-center">Jumlah Meteran</th>
                                 <th class="text-center">Total Tagihan</th>
-                                <th class="text-center" width="10%">Action</th>
+                                <th class="text-center align-middle" width="10%">Action</th>
                             </tr>
                         </thead>
                         <tbody>
@@ -210,13 +214,13 @@
                         <label for="exampleInputEmail1">Masukkan Halaman</label>
                         <div class="row">
                             <div class="col-5">
-                                <input type="number" min="1" max="<?= $total_transaksi ?>" placeholder="Halaman Awal" class="form-control" name="page_awal" required>
+                                <input type="number" id="min_page" min="1" max="<?= $total_transaksi ?>" placeholder="Halaman Awal" class="form-control" name="page_awal" required>
                             </div>
                             <div class="col-1 text-center pt-2">
                                 -
                             </div>
                             <div class="col-5">
-                                <input type="number" min="1" max="<?= $total_transaksi ?>" placeholder="Halaman Akhir" class="form-control" name="page_akhir" required>
+                                <input type="number" id="max_page" max="<?= $total_transaksi ?>" placeholder="Halaman Akhir" class="form-control" name="page_akhir" required>
                             </div>
                         </div>
                     </div>

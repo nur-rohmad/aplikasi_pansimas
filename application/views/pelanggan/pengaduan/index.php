@@ -48,9 +48,11 @@
                         <div class="alert alert-danger alert-dismissible fade show" role="alert">
 
                             <?= $this->session->FlashData('error_pengaduan') ?>
-                            <ul>
-                                <?= $this->session->FlashData('pesan_eror') ?>
-                            </ul>
+                            <?php if ($this->session->FlashData('pesan_eror')) { ?>
+                                <ul>
+                                    <?= $this->session->FlashData('pesan_eror') ?>
+                                </ul>
+                            <?php } ?>
                             <button type="button" class="close" data-dismiss="alert" aria-label="Close">
                                 <span aria-hidden="true">&times;</span>
                                 <span class="sr-only">Close</span>

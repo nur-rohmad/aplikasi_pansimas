@@ -248,6 +248,11 @@ class Pelanggan extends CI_Controller
 
     public function edit_pelanggan($id_pelanggan)
     {
+        // cek id pelanggan apakah ada
+        if (!$this->M_pelanggan->get__pelanggan_by_id($id_pelanggan)) {
+            $this->session->set_flashdata('gagal', 'Data Yang Anda Minta Tidak diemukan');
+            redirect('operator/pelanggan');
+        }
         $this->load->view('templete/header');
         $this->load->view('templete/navbar');
         $data['user_data'] = $this->session->userdata('user');
@@ -287,6 +292,11 @@ class Pelanggan extends CI_Controller
 
     public function delete_pelanggan($id_pelanggan)
     {
+        // cek id pelanggan apakah ada
+        if (!$this->M_pelanggan->get__pelanggan_by_id($id_pelanggan)) {
+            $this->session->set_flashdata('gagal', 'Data Yang Anda Minta Tidak diemukan');
+            redirect('operator/pelanggan');
+        }
         $this->load->view('templete/header');
         $this->load->view('templete/navbar');
         $data['user_data'] = $this->session->userdata('user');
@@ -329,6 +339,25 @@ class Pelanggan extends CI_Controller
         }
         //default page
         redirect('pelanggan/operator/delete_pelanggan/' . $this->input->post('id_pelanggan'));
+    }
+
+    // detail pelanggan
+    public function detail($id_pelanggan)
+    {
+        // cek id pelanggan apakah ada
+        if (!$this->M_pelanggan->get__pelanggan_by_id($id_pelanggan)) {
+            $this->session->set_flashdata('gagal', 'Data Yang Anda Minta Tidak diemukan');
+            redirect('operator/pelanggan');
+        }
+        $this->load->view('templete/header');
+        $this->load->view('templete/navbar');
+        $data['user_data'] = $this->session->userdata('user');
+        $this->load->view('templete/side_bar', $data);
+        $data['pelanggan'] = $this->M_pelanggan->get__pelanggan_by_id($id_pelanggan);
+        $data['riwayat'] = $this->M_pelanggan->riwayat_tagihan_pelanggan($id_pelanggan);
+        $data['data_chart'] = $this->M_pelanggan->labelChart($id_pelanggan);
+        $this->load->view('operator/pelanggan/detail_pelanggan', $data);
+        $this->load->view('templete/footer');
     }
 
     public function cetak_pelanggan()

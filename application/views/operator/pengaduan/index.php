@@ -65,8 +65,12 @@
                             Swal.fire("Sukses", "<?= $this->session->FlashData('success_pengaduan') ?>", "success");
                         </script>
                     <?php
-                    }
+                    } else if ($this->session->FlashData('gagal_pengaduan')) {
                     ?>
+                        <script>
+                            Swal.fire("Gagal", "<?= $this->session->FlashData('gagal_pengaduan') ?>", "error");
+                        </script>
+                    <?php } ?>
                     <div class="table-responsive">
                         <table class="table table-bordered" id="myTable2" width="100%">
                             <thead>

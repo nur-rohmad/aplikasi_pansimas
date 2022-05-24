@@ -184,6 +184,7 @@
     var options = {
         series: [{
             data: [<?= $jumlah; ?>],
+            name: 'Tagihan',
         }],
         chart: {
             type: 'bar',

@@ -62,9 +62,9 @@
       },
 
       dom: 'Bfrtip',
-      lenghtMenu : [
+      lenghtMenu: [
         [10, 25, 50, -1],
-        ['q','q','e','e']
+        ['q', 'q', 'e', 'e']
       ],
       // lengthChange: true,
       buttons: [{
@@ -72,7 +72,7 @@
           text: '<i class="fas fa-print mr-1"></i>Print',
           className: "btn btn-success mr-2",
           title: 'Data  Transaksi KP - SPAMS Panguripan ',
-           exportOptions:{
+          exportOptions: {
             columns: ':visible:not(:contains(Action),:contains(No))'
           }
         },
@@ -82,7 +82,7 @@
           className: "btn btn-primary mr-2",
           filename: 'data_transaksi',
           title: 'Data  Transaksi KP - SPAMS Panguripan ',
-           exportOptions:{
+          exportOptions: {
             columns: ':visible:not(:contains(Action),:contains(No))'
           }
         },
@@ -92,7 +92,7 @@
           className: "btn btn-warning mr-2",
           filename: 'data_transaksi',
           title: 'Data  Transaksi KP - SPAMS Panguripan ',
-           exportOptions:{
+          exportOptions: {
             columns: ':visible:not(:contains(Action),:contains(No))'
           }
         }

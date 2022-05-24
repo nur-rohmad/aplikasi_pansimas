@@ -182,7 +182,7 @@
          </div>
      </div>
 
-     <!-- modal bayar-->
+     <!-- < !-- modal bayar-->
      <div class="modal fade" id="modal">
          <div class="modal-dialog">
              <div class="modal-content">
