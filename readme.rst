@@ -74,6 +74,6 @@ Contoh Tampilan Website
 ***************
 
 untuk dapat melihat tampilan website ini anda dapat mengakses link berikut :
-https://kpspambintoyo.infinityfreeapp.com/login?i=1
+https://kpspambintoyo.infinityfreeapp.com
 
 
