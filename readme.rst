@@ -74,16 +74,6 @@ Contoh Tampilan Website
 ***************
 
 untuk dapat melihat tampilan website ini anda dapat mengakses link berikut :
-https://kpspambintoyo.000webhostapp.com/
+https://kpspambintoyo.infinityfreeapp.com/login?i=1
 
-dengan menggunakan user sebagai berikut untuk role admin :
 
-username : rohmad
-
-pass  : rohmad123
-
-dengan menggunakan user sebagai berikut untuk role pelanggan :
-
-username : sukadi	
-
-pass  : sukadi123
