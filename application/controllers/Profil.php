@@ -54,7 +54,7 @@ class Profil extends CI_Controller
             $pass = $this->input->post('pass');
             $password_hash = password_hash($pass, PASSWORD_DEFAULT);
             $params['user_pass'] = $password_hash;
-            $this->_sendEmail();
+            $this->_sendEmail($this->input->post('user_name'));
         }
 
         if (isset($_FILES['foto_profil'])) {
@@ -115,13 +115,13 @@ class Profil extends CI_Controller
         }
     }
 
-    private function _sendEmail()
+    private function _sendEmail($user_name)
     {
         $config = [
             'protocol'  => 'smtp',
             'smtp_host' => 'ssl://smtp.googlemail.com',
             'smtp_user' => 'qiliasalmu@gmail.com',
-            'smtp_pass' => 'Youtubepremium456',
+            'smtp_pass' => 'prqzwckjvffuhkzm',
             'smtp_port' => 465,
             'mailtype'  => 'html',
             'charset'   => 'utf-8',
@@ -130,12 +130,75 @@ class Profil extends CI_Controller
 
         $this->email->initialize($config);
 
-        $this->email->from('qiliasalmu@gmail.com', 'pansimas');
+        $this->email->from('qiliasalmu@gmail.com', 'Pamsimas');
         $this->email->to($this->input->post('email', true));
-        $this->email->subject('Ganti Password');
-        $this->email->message('
-                <h2 >KP-SPAM Desa Bintoyo </h2>
-                <p> Telah dilakukan pergantian password pada ' . format_indo_full(date('Y-m-d')) . ' </p>');
+        $this->email->subject('Ubah Password');
+        $this->email->message('<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional //EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+<html xmlns="http://www.w3.org/1999/xhtml" xmlns:o="urn:schemas-microsoft-com:office:office" xmlns:v="urn:schemas-microsoft-com:vml">
+<head>
+<!--[if gte mso 9]><xml><o:OfficeDocumentSettings><o:AllowPNG/><o:PixelsPerInch>96</o:PixelsPerInch></o:OfficeDocumentSettings></xml><![endif]-->
+<meta content="text/html; charset=utf-8" http-equiv="Content-Type"/>
+<meta content="width=device-width" name="viewport"/>
+<!--[if !mso]><!-->
+<meta content="IE=edge" http-equiv="X-UA-Compatible"/>
+<!--<![endif]-->
+<title></title>
+<!--[if !mso]><!-->
+<!--<![endif]-->
+</head >
+<body>
+<table
+      border="0"
+      style="width: 400px; margin: 0 auto; box-shadow: 5px 10px 10px #888888"
+      cellpadding="10"
+    >
+      <tr style="background-color: white">
+        <td width="45%" align="center">
+          <img
+            src="' . base_url('resource/adminlte31/img/pansimas.jpeg') . '"
+            alt="logo"
+            style="width: 50%; background-color: white"
+          />
+        </td>
+        <td
+          align="center"
+          style="
+            font-weight: bold;
+            font-size: 20px;
+            color: black;
+            font-family: sans-serif;
+          "
+        >
+           Aplikasi Pamsismas Desa Bintoyo
+        </td>
+      </tr>
+      <tr>
+        <td colspan="2"><hr style="border-top: 2px solid black" /></td>
+      </tr>
+      <tr>
+        <td colspan="2">
+          <p
+            style="
+              text-indent: 20px;
+              text-align: justify;
+              font-size: 20px;
+              line-height: 40px;
+            "
+          >
+            <span style="font-size: 30px">T</span>elah  Berhasil dilakukan
+            pengubahan password untuk username
+            <span style="font-weight: bold">' . $user_name . '</span> pada
+            <span style="font-weight: bold">' . format_indo_full(date('Y-m-d')) . '</span>
+          </p>
+        </td>
+      </tr>
+      <tr>
+        <td colspan="2" align="center"> semoga harimu menyenangkan </td>
+      </tr>
+    </table>
+    </body>
+</html>');
 
         if ($this->email->send()) {
             # code...

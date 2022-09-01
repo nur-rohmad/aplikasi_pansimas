@@ -168,7 +168,9 @@
                                         <td class="text-center"> Rp. <?= number_format($data['total_bayar'], 0, ',', '.'); ?></td>
                                         <td class="text-center">
                                             <a href="<?= base_url('operator/transaksi/cetak_nota/') . $data['id_transaksi'] ?>" class="btn btn-sm btn-info"><i class="fas fa-print"></i> Cetak</a>
-                                            <a href="<?= base_url('operator/transaksi/delete_transaksi/') . $data['id_transaksi'] ?>" class="btn btn-sm btn-danger mt-2"><i class="fas fa-trash-alt"></i> Hapus</a>
+                                            <?php if ($data['status_pembayaran'] == "belum_bayar" || $data['status_pembayaran'] == "gagal") : ?>
+                                                <a href="<?= base_url('operator/transaksi/delete_transaksi/') . $data['id_transaksi'] ?>" class="btn btn-sm btn-danger mt-2"><i class="fas fa-trash-alt"></i> Hapus</a>
+                                            <?php endif; ?>
 
                                         </td>
                                     </tr>

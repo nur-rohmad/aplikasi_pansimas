@@ -196,7 +196,7 @@
                      <form id="form" method="POST" action="<?= base_url('operator/pembayaran/proccess_pembayaran_manual') ?>">
                          <input type="hidden" name="id">
                          <div class="row">
-                             <div class="col-6">
+                             <div class="col-md-6">
                                  <div class="form-group">
                                      <label>ID Transaksi</label>
                                      <input type="text" class="form-control" placeholder="Nama" name="id_transaksi" readonly required>
@@ -206,7 +206,7 @@
                                      <input type="text" class="form-control" placeholder="Nama" name="name_pelanggan" readonly required>
                                  </div>
                              </div>
-                             <div class="col-6">
+                             <div class="col-md-6">
                                  <div class="form-group">
                                      <label>ID Pelanggan</label>
                                      <input type="text" class="form-control" placeholder="Nama" name="id_pelanggan" readonly required>
@@ -237,7 +237,7 @@
                  </div>
                  <div class="modal-body">
                      <div class="row">
-                         <div class="col-5">
+                         <div class="col-md-5">
                              <div class="form-group">
                                  <label>No Transaksi</label>
                                  <div class="input-group mb-3">
@@ -257,7 +257,7 @@
                                  </div>
                              </div>
                          </div>
-                         <div class="col-7">
+                         <div class="col-md-7">
                              <div class="form-group">
                                  <label id="label_waktu">Waktu Pembayaran</label>
                                  <div class="row">

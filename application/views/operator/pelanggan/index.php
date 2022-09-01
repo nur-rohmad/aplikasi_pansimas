@@ -79,7 +79,7 @@
                                  <th class="text-center">Nama Pelanggan</th>
                                  <th class="text-center">RW</th>
                                  <th class="text-center">RT</th>
-                                 <th class="text-center" width="20%">Action</th>
+                                 <th class="text-center" width="30%">Action</th>
                              </tr>
                          </thead>
                          <tbody>
@@ -96,6 +96,7 @@
                                              <a href="<?= base_url('operator/pelanggan/detail/') . $data['id_pelanggan'] ?>" class="btn btn-sm btn-primary"><i class="fas fa-eye mr-1"></i>Detail</a>
                                              <a href="<?= base_url('operator/pelanggan/step_akun/') . $data['user_id'] ?>" class="btn btn-sm btn-info my-2"><i class="fas fa-edit mr-1"></i>edit</a>
                                              <a href="<?= base_url('operator/pelanggan/delete_pelanggan/') . $data['id_pelanggan'] ?>" class="btn btn-sm btn-danger"><i class="fas fa-trash-alt mr-1"></i>hapus</a>
+                                             <a href="<?= base_url('operator/pelanggan/kodeqrpelanggan/') . $data['id_pelanggan'] ?>" class="btn btn-sm btn-warning text-white"><i class="fas fa-qrcode mr-2"></i>Kode QR</a>
                                          </td>
                                      </tr>
                                      <?php $i++; ?>

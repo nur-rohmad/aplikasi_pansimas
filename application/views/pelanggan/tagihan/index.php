@@ -143,7 +143,7 @@
             success: function(data) {
 
                 var data1 = JSON.parse(data)
-                console.log(data1)
+                // console.log(data1)
                 // console.log(data)
                 var bank = data1.data.bank;
 
@@ -155,7 +155,7 @@
                         <div class="col-6"><h2 class="text-primary">` + data1.va_numbers.bill_key + `</h2></div>`
                 } else {
                     va_numbers = `<div class="col-12"><h6>Virtual Number</h6> </div>
-                        <div class="col-12"><h2 class="text-primary">` + data1.data.va_number + `</h2></div>`
+                        <div class="col-12"><a href="#" onclick="copyText('va_number')" id="btnVaNumber" data-toggle="tooltip"   ><h2 class="text-primary" id="va_number" >` + data1.data.va_number + `</h2></a></div>`
                 }
                 // var bank = data1.bank
                 Swal.fire({
@@ -182,10 +182,25 @@
                     confirmButtonText: '<a target="_blank"  href="' + data1.data.link_petunjuk_pembayaran + '" class="text-white" ><i class="fas fa-download"></i> Cara Pembayaran</a>',
                     denyButtonText: `<i class="fas fa-window-close mr-2 "></i>Close`,
                     confirmButtonColor: '#28a745',
-
-
                 })
+
             }
         })
+
+    }
+
+
+    function copyText(id) {
+        console.log(id)
+        var va_number = $('#' + id).text();
+        navigator.clipboard.writeText(va_number)
+        $('[data-toggle="tooltip"]').tooltip({
+            animated: 'fade',
+            placement: 'top',
+            trigger: 'click',
+            title: "Virtual Number  berhasil disalin"
+        });
+
+        console.log(va_number)
     }
 </script>

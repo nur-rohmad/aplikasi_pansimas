@@ -112,6 +112,7 @@
     </div>
 </div>
 
+
 <style>
     @page {
         margin: 0px;
@@ -148,15 +149,15 @@
     }
 
     .label {
-        padding-right: 1.5em;
+        padding-right: 2em;
         padding-left: 1em;
         padding-top: 0.5em;
     }
 
     td {
-        letter-spacing: 1px;
-        font-family: Courier;
-        line-height: 15px;
+        letter-spacing: 2px;
+        /* font-family: 'minisystem'; */
+        /* font-weight: bold; */
 
     }
 
@@ -172,7 +173,7 @@
     .judul {
         font-size: 20px;
         font-weight: bold;
-        font-family: Courier;
+        font-family: 'Times New Roman', Times, serif;
     }
 
     .lunas {

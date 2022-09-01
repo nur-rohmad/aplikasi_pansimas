@@ -213,16 +213,15 @@ class Transaksi extends CI_Controller
         $this->form_validation->set_message('required', '{field} Harus Diisi');
         $this->form_validation->set_rules('nama_pelanggan', 'Nama Pelanggan', 'required');
         $this->form_validation->set_rules('end_meteran', 'Meteran Sekarang', 'required');
-
-
-
-
-
         if ($this->form_validation->run() !== FALSE) {
             $id_pelanggan = $this->input->post('nama_pelanggan', TRUE);
             $start_meter = $this->M_transaksi->get_start_meter($id_pelanggan);
             $end_meteran = $this->input->post('end_meteran', TRUE);
             $jumlah_meteran = $this->get_total_meteran($end_meteran);
+            if ($jumlah_meteran < 0) {
+                $this->session->set_flashdata('gagal_transaksi', 'Gagal Nilai Transaksi minus');
+                redirect('operator/transaksi/add_transaksi');
+            }
             $biaya_pemakaian = $this->biaya_pemakaian($jumlah_meteran);
             $total_bayar1 = $this->total_bayar($biaya_pemakaian);
 
@@ -524,5 +523,13 @@ class Transaksi extends CI_Controller
 
         // Output the generated PDF to Browser
         $dompdf->stream("hasil1.pdf", array("Attachment" => 0));
+    }
+
+    // get meteran terakir
+    public function getMeteranPelanggan()
+    {
+        $id = $this->input->post('id_pelanggan');
+        $data = ["data" => $this->db->query("SELECT * FROM pelanggan a join stand_meter_pelanggan b On a.id_pelanggan=b.id_pelanggan WHERE a.id_pelanggan = '$id'")->row_array()];
+        echo json_encode($data);
     }
 }

@@ -15,7 +15,7 @@
              </div>
              <div class="info">
                  <a href="<?= base_url('profil') ?>" class="d-block"><?= $user_data['nama_lengkap']; ?></a>
-                 <span class="badge badge-success mr-2"> <?= ucwords($user_data['user_role_name']); ?></span>
+                 <span class="badge badge-danger text-white mr-2"> <?= ucwords($user_data['user_role_name']); ?></span>
                  <a onclick="logout()" href="#"><i class="fas fa-sign-out-alt"></i></a>
              </div>
          </div>

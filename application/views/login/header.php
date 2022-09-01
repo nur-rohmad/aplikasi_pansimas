@@ -3,11 +3,12 @@
 
 <head>
   <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
   <link rel="icon" href="<?= base_url('resource/adminlte31/') ?>/img/pansimas.jpeg ">
   <title>Login Pansimas </title>
 
   <!-- Google Font: Source Sans Pro -->
-  <link rel="stylesheet" href="<?= base_url(''); ?>https://fonts.googleapis.com/css?family=Source+Sans+Pro:300,400,400i,700&display=fallback">
+  <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Source+Sans+Pro:300,400,400i,700&display=fallback">
   <!-- Font Awesome -->
   <link rel="stylesheet" href="<?= base_url('resource/adminlte31/'); ?>plugins/fontawesome-free/css/all.min.css">
   <!-- overlayScrollbars -->
@@ -25,6 +26,14 @@
   <!-- swert alert -->
   <link rel="stylesheet" href="<?= base_url('resource/adminlte31/'); ?>plugins/sweetalert2/sweetalert2.min.css">
   <script src="<?= base_url('resource/adminlte31/'); ?>plugins/sweetalert2/sweetalert2.min.js"></script>
+  <style>
+    body {
+      background-image: url('<?= base_url("resource/adminlte31/img/bacground_login.jpg") ?>');
+      background-size: cover;
+      background-position: bottom;
+      backdrop-filter: blur(5px);
+    }
+  </style>
 </head>
 
 <body class="hold-transition login-page">

@@ -318,6 +318,8 @@ class Pelanggan extends CI_Controller
             $where = ['id_pelanggan' => $id_pelanggan];
             $where_user_id = ['user_id' => $user_id['user_id']];
             //proses insert
+            $this->db->delete('transaksi', $where);
+            $this->db->delete('pengaduan', ['pengaduan_by' => $user_id['user_id']]);
             if ($this->M_pelanggan->delete_pelanggan_stand_meter($where)) {
                 if ($this->M_pelanggan->delete_pelanggan($where)) {
                     if ($this->M_pelanggan->delete_user_pelanggan($where_user_id)) {
@@ -450,5 +452,38 @@ class Pelanggan extends CI_Controller
         header('Cache-Control: max-age=0');
 
         $writer->save('php://output');
+    }
+
+    // generete qrcode
+    public function kodeqrpelanggan($id_pelanggan)
+    {
+        $kode_qr = './resource/adminlte31/img/qrcodePelanggan/qrcode-' . $id_pelanggan . '.png';
+        if (file_exists($kode_qr)) {
+            $this->load->view('templete/header');
+            $this->load->view('templete/navbar');
+            $data['user_data'] = $this->session->userdata('user');
+            $this->load->view('templete/side_bar', $data);
+            $data['pelanggan'] = $this->M_pelanggan->get__pelanggan_by_id($id_pelanggan);
+            $this->load->view('operator/pelanggan/kartu_pelanggan', $data);
+            $this->load->view('templete/footer');
+        } else {
+            // load library
+            $this->load->library('ciqrcode');
+            // Peth untuk menyimpan qrcode
+            $path = './resource/adminlte31/img/qrcodePelanggan/';
+            $params['data'] =  $id_pelanggan;
+            $params['level'] = 'H';
+            $params['size'] = 10;
+            $params['savename'] = $path . 'qrcode-' . $id_pelanggan . '.png';
+            $this->ciqrcode->generate($params);
+            $this->load->view('templete/header');
+            $this->load->view('templete/navbar');
+            $data['user_data'] = $this->session->userdata('user');
+            $this->load->view('templete/side_bar', $data);
+            $data['pelanggan'] = $this->M_pelanggan->get__pelanggan_by_id($id_pelanggan);
+            $this->load->view('operator/pelanggan/kartu_pelanggan', $data);
+            $this->load->view('templete/footer');
+        }
+        // die;
     }
 }

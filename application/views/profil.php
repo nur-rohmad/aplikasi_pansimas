@@ -57,7 +57,7 @@
                      <form method="POST" action="<?= base_url('profil/procces_update_profile') ?>" enctype="multipart/form-data">
                          <input type="hidden" name="user_id" value="<?= $user_detail['user_id'] ?>">
                          <div class="row mt-5">
-                             <div class="col-6">
+                             <div class="col-md-6">
                                  <div class="form-group">
                                      <label for="exampleFormControlInput1">Nama</label>
                                      <input type="text" class="form-control" name="nama_lengkap" value="<?= $user_detail['user_alias'] ?>" id="exampleFormControlInput1">
@@ -72,7 +72,7 @@
                                      <span class="text-danger">Kosongkan Bila Tidak Ingin Ganti Password</span>
                                  </div>
                              </div>
-                             <div class="col-6">
+                             <div class="col-md-6">
                                  <div class="form-group">
                                      <label for="role_name">No Telepon</label>
                                      <input type="text" class="form-control" id="no_telp" name="no_telp" placeholder="Masukkan No Telepon" value="<?php if (isset($user_detail['no_telp'])) {

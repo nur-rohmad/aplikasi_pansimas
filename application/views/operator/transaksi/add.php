@@ -73,20 +73,32 @@
                <?php
                 }
                 ?>
-               <div class="form-group">
-                 <label>Nama Pelanggan</label>
-                 <select class="form-control select-2" data-placeholder="Masukkan Nama Pelanggan" name="nama_pelanggan" id="nama_pelanggan">
-                   <option value=""></option>
-                   <?php foreach ($pelanggan as $nama) : ?>
-                     <option value="<?= $nama['id_pelanggan']; ?>" <?php echo set_value('nama_pelanggan') == $nama['id_pelanggan'] ? 'selected' : '' ?>><?= $nama['id_pelanggan']; ?> - <?= $nama['name_pelanggan']; ?></option>
-                   <?php endforeach; ?>
-                 </select>
+               <div class="row">
+
+                 <div class="col-md-3" id="reader"></div>
+                 <div class="col-md-9">
+                   <div class="form-group">
+                     <label>Nama Pelanggan</label>
+                     <select class="form-control select-2" id="id_pelanggan" data-placeholder="Masukkan Nama Pelanggan" name="nama_pelanggan" id="nama_pelanggan">
+                       <option value=""></option>
+                       <?php foreach ($pelanggan as $nama) : ?>
+                         <option value="<?= $nama['id_pelanggan']; ?>" <?php echo set_value('nama_pelanggan') == $nama['id_pelanggan'] ? 'selected' : '' ?>><?= $nama['id_pelanggan']; ?> - <?= $nama['name_pelanggan']; ?></option>
+                       <?php endforeach; ?>
+                     </select>
+                   </div>
+                   <div class="form-group">
+                     <label for="selectPortal">Metteran terakir </label>
+                     <input type="number" class="form-control" id="meteran_terakir" readonly />
+                   </div>
+                   <div class="form-group">
+                     <label for="selectPortal">Metteran Sekarang </label>
+                     <input type="number" class="form-control" id="end_meteran" name="end_meteran" value="<?= set_value('end_meteran') ?>" placeholder="Masukkan Metteran Sekarang" />
+                   </div>
+                 </div>
+
                </div>
 
-               <div class="form-group">
-                 <label for="selectPortal">Metteran Sekarang </label>
-                 <input type="number" class="form-control" id="end_meteran" name="end_meteran" value="<?= set_value('end_meteran') ?>" placeholder="Masukkan Metteran Sekarang" />
-               </div>
+
 
              </div>
              <!-- /.card-body -->
@@ -103,3 +115,43 @@
    </div>
    <!-- /.content -->
  </div>
+ <script src="<?= base_url('resource/adminlte31/') ?>plugins/jquery/jquery.min.js"></script>
+ <script src="<?= base_url('resource/adminlte31/') ?>plugins/readerqrcode/html5-qrcode.min.js"></script>
+ <script>
+   $(document).ready(function() {
+
+     $('#id_pelanggan').change(() => {
+       // const jasa = "rental_mobil";
+       let id = $('#id_pelanggan').val();
+       console.log(id)
+       $.ajax({
+         url: '<?= base_url('operator/transaksi/getMeteranPelanggan') ?>',
+         type: "POST",
+         // dataType: "JSON",
+         data: {
+           id_pelanggan: id,
+         },
+         cache: false,
+         success: function(res) {
+           let data_json = JSON.parse(res)
+           console.log(data_json)
+           $('#meteran_terakir').val(data_json.data.end_meter)
+         }
+       });
+     })
+   })
+
+   function onScanSuccess(decodedText, decodedResult) {
+     // Handle on success condition with the decoded text or result.
+     //  console.log(`Scan result: ${decodedText}`, decodedResult);
+     $('#id_pelanggan').val(decodedText).change();
+     //  window.location.assign('<?= base_url('operator/transaksi/add_transaksi') ?>')
+   }
+
+   var html5QrcodeScanner = new Html5QrcodeScanner(
+     "reader", {
+       fps: 10,
+       qrbox: 250
+     });
+   html5QrcodeScanner.render(onScanSuccess);
+ </script>

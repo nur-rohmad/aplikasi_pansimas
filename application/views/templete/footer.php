@@ -71,7 +71,7 @@
           extend: "print",
           text: '<i class="fas fa-print mr-1"></i>Print',
           className: "btn btn-success mr-2",
-          title: 'Data  Transaksi KP - SPAMS Panguripan ',
+          title: '<h1 >Data  Transaksi KP - SPAMS Panguripan</h1> ',
           exportOptions: {
             columns: ':visible:not(:contains(Action),:contains(No))'
           }

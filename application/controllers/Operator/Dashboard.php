@@ -106,6 +106,7 @@ class Dashboard extends CI_Controller
         if ($query->num_rows() > 0) {
             $result = $query->result_array();
             $query->free_result();
+
             return $result;
         } else {
             return array();

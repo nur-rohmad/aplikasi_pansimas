@@ -108,7 +108,7 @@ class Login extends CI_Controller
                 ];
                 $this->db->insert('user_token', $param_user_token);
                 $this->_sendEmail($token);
-                $this->session->set_flashdata('success', 'Link Ganti Password Telah Dikirim Ke email Anda ');
+                $this->session->set_flashdata('success', 'Link Ganti Password Telah Dikirim Ke email Anda Bila tidak menerima email cek difolder spam');
                 redirect('login/forgotpassword');
             } else {
                 $this->session->set_flashdata('gagal_resetpassword', 'email tidak terdaftar');
@@ -126,7 +126,7 @@ class Login extends CI_Controller
             'protocol'  => 'smtp',
             'smtp_host' => 'ssl://smtp.googlemail.com',
             'smtp_user' => 'qiliasalmu@gmail.com',
-            'smtp_pass' => 'Youtubepremium456',
+            'smtp_pass' => 'prqzwckjvffuhkzm',
             'smtp_port' => 465,
             'mailtype'  => 'html',
             'charset'   => 'utf-8',
@@ -135,13 +135,102 @@ class Login extends CI_Controller
 
         $this->email->initialize($config);
 
-        $this->email->from('qiliasalmu@gmail.com', 'pansimas');
+        $this->email->from('qiliasalmu@gmail.com', 'Pamsismas');
         $this->email->to($this->input->post('emil_forgotpassword'));
-        $this->email->subject('reset Password');
-        $this->email->message('
-                <h2 >KP-SPAM Desa Bintoyo </h2>
-                <p> Terima kasih telah melakukan permintaann untuk melakukan reset password. untuk melanjutkan reset password silahkan klik link berikut </p>
-                <a href="' . base_url('') . 'login/resetpassword?token=' . urlencode($token) . '"> Reset Password </a>');
+        $this->email->subject('Reset Password');
+        $this->email->message('<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional //EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+<html xmlns="http://www.w3.org/1999/xhtml" xmlns:o="urn:schemas-microsoft-com:office:office" xmlns:v="urn:schemas-microsoft-com:vml">
+<head>
+<!--[if gte mso 9]><xml><o:OfficeDocumentSettings><o:AllowPNG/><o:PixelsPerInch>96</o:PixelsPerInch></o:OfficeDocumentSettings></xml><![endif]-->
+<meta content="text/html; charset=utf-8" http-equiv="Content-Type"/>
+<meta content="width=device-width" name="viewport"/>
+<!--[if !mso]><!-->
+<meta content="IE=edge" http-equiv="X-UA-Compatible"/>
+<!--<![endif]-->
+<title></title>
+<!--[if !mso]><!-->
+<!--<![endif]-->
+</head >
+<body>
+<table
+      border="0"
+      style="width: 400px; margin: 0 auto; box-shadow: 5px 10px 10px #888888"
+      cellpadding="10"
+    >
+      <tr style="background-color: white">
+        <td width="45%" align="center">
+          <img
+            src="' . base_url('resource/adminlte31/img/pansimas.jpeg') . '"
+            alt="logo"
+            style="width: 50%; background-color: white"
+          />
+        </td>
+        <td
+          align="center"
+          style="
+            font-weight: bold;
+            font-size: 20px;
+            color: black;
+            font-family: sans-serif;
+          "
+        >
+          Reset Password Aplikasi Pamsismas Desa Bintoyo
+        </td>
+      </tr>
+      <tr>
+        <td colspan="2"><hr style="border-top: 2px solid black" /></td>
+      </tr>
+      <tr style="background-color: #f5f6fa">
+        <td colspan="2">
+          <p
+            style="
+              text-indent: 20px;
+              text-align: justify;
+              font-size: 20px;
+              line-height: 40px;
+            "
+          >
+            <span style="font-size: 30px">T</span>erimakasih telah melakukan
+            permintaan mengatur ulang password. mengatur ulang password akan
+            dapat dilakukan setelah anda menekan tombol dibawah ini. berikut
+            adalah tombol untuk mengatur ulang password anda :
+          </p>
+        </td>
+      </tr>
+      <tr>
+        <td colspan="2" align="center">
+          <br />
+          <a
+            href="' . base_url('') . 'login/resetpassword?token=' . urlencode($token) . '"
+            style="
+              text-decoration: none;
+              padding: 10px;
+              background-color: #008cba;
+              color: white;
+              border-radius: 10px;
+              margin: 10px 0px;
+              font-size: 20px;
+            "
+            >Reset Password</a
+          >
+          <br />
+        </td>
+      </tr>
+      <tr>
+        <td colspan="2">
+          <p style="font-size: 20px; line-height: 30px">
+            Jika tombol diatas mati anda dapat menyalin link berikut : <br />
+            <a href="#"
+              >' . base_url('') . 'login/resetpassword?token=' . urlencode($token) . '</a
+            >
+          </p>
+        </td>
+      </tr>
+    </table>
+    </body>
+</html>
+        ');
 
         if ($this->email->send()) {
             # code...

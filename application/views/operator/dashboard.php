@@ -229,14 +229,47 @@
 </script>
 
 <script>
-    console.log([<?= $jumlah_donut ?>])
+    console.log([<?= $label_donut ?>])
     var options = {
         series: [<?= $jumlah_donut ?>],
         labels: [
-            <?= $label_donut ?>
+            <?= $label_donut ?>,
         ],
         colors: ["#ff5252", "#fd7e14", "#9ccc65"],
         chart: {
+            toolbar: {
+                show: true,
+                offsetX: 0,
+                offsetY: 0,
+                tools: {
+                    download: true,
+                    selection: true,
+                    zoom: true,
+                    zoomin: true,
+                    zoomout: true,
+                    pan: true,
+                    reset: true | '<img src="/static/icons/reset.png" width="20">',
+                    customIcons: []
+                },
+                export: {
+                    csv: {
+                        filename: undefined,
+                        columnDelimiter: ',',
+                        headerCategory: 'category',
+                        headerValue: 'value',
+                        dateFormatter(timestamp) {
+                            return new Date(timestamp).toDateString()
+                        }
+                    },
+                    svg: {
+                        filename: 'chart-jumlah-pelanggan',
+                    },
+                    png: {
+                        filename: 'chart-jumlah-pelanggan',
+                    }
+                },
+                autoSelected: 'zoom'
+            },
             height: 350,
             type: 'donut',
         },
@@ -255,10 +288,6 @@
 
     var chart = new ApexCharts(document.getElementById('myChart1'), options);
     chart.render();
-    //  const myChart = new Chart(
-    //      document.getElementById('myChart1'),
-    //      config
-    //  );
 </script>
 <script type="text/javascript">
     window.onload = function() {

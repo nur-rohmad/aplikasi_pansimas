@@ -59,7 +59,7 @@ class M_transaksi extends CI_Model
     //get all transaksi
     public function get_all_transaksi()
     {
-        $sql = "SELECT a.id_transaksi,a.tanggal_transaksi, a.id_pelanggan ,a.jumlah_meteran,a.total_bayar, b.name_pelanggan, a.start_meter, a.end_meter FROM transaksi a JOIN pelanggan b on a.id_pelanggan = b.id_pelanggan  WHERE MONTH(a.tanggal_transaksi) = MONTH(now())";
+        $sql = "SELECT a.id_transaksi,a.tanggal_transaksi, a.id_pelanggan ,a.jumlah_meteran,a.total_bayar, b.name_pelanggan, a.start_meter, a.end_meter, a.status_pembayaran FROM transaksi a JOIN pelanggan b on a.id_pelanggan = b.id_pelanggan  WHERE MONTH(a.tanggal_transaksi) = MONTH(now())";
         $query = $this->db->query($sql);
         if ($query->num_rows() > 0) {
             $result = $query->result_array();
