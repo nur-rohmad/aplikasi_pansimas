@@ -43,6 +43,11 @@
                      <div class="card">
                          <div class="card-header bg-primary">
                              <h3 class="card-title">Data Pelanggan</h3>
+                             <button class="btn btn-sm btn-dark float-right" id="button_qr"> <i class="fas fa-qrcode"></i> Kode QR </button>
+                             <button class="btn btn-sm btn-dark float-right d-none" type="button" id="btn_qr_loading" disabled>
+                                <span class="spinner-border spinner-border-sm" role="status" aria-hidden="true"></span>
+                                Loading...
+                            </button>
                          </div>
                          <div class="card-body">
                              <table width="100%" style="line-height: 30px;">
@@ -78,6 +83,7 @@
                      <div class="card">
                          <div class="card-header bg-danger">
                              <h3 class="card-title">Riwayat Tagihan Pelanggan</h3>
+                             <button class="btn btn-sm btn-dark float-right"> <i class="fas fa-download"></i> Download Riwayat Tagihan </button>
                          </div>
                          <div class="card-body">
                              <div class="table-responsive">
@@ -108,7 +114,7 @@
                                              <?php endforeach; ?>
                                          <?php else : ?>
                                              <tr class="text-center">
-                                                 <td colspan="5">
+                                                 <td colspan="6">
                                                      <i class="fas fa-folder-open fa-2x mt-2"></i>
                                                      <p>Data Tidak di Temukan</p>
                                                  </td>
@@ -159,8 +165,8 @@
  </div>
 
  <script src="<?= base_url('resource/adminlte31/') ?>plugins/jquery/jquery.min.js"></script>
- <script src="<?= base_url('resource/adminlte31/') ?>plugins/chart.js/Chart.js ?>"></script>
- <script src="<?= base_url('resource/adminlte31/') ?>js/apexcharts.min.js ?>"></script>
+ <script src="<?= base_url('resource/adminlte31/') ?>plugins/chart.js/Chart.js?>"></script>
+ <script src="<?= base_url('resource/adminlte31/') ?>js/apexcharts.min.js?>"></script>
  <!-- <script src="https://cdn.jsdelivr.net/npm/apexcharts"></script> -->
 
 
@@ -216,4 +222,50 @@
 
      var chart = new ApexCharts(document.getElementById('myChart'), options);
      chart.render();
+
+     $('#button_qr').click(() => {
+         $('#btn_qr_loading').removeClass('d-none');
+         $('#button_qr').addClass('d-none');
+         $.ajax({
+             url: "<?= base_url('operator/pelanggan/genereteQrcodePelanggan'); ?>",
+             data: {
+                 'id_pelanggan':  "<?= $pelanggan['id_pelanggan'] ?>"
+             },
+             type: 'GET',
+             success: function(res) {
+                 $('#button_qr').removeClass('d-none');
+                $('#btn_qr_loading').addClass('d-none');
+                 Swal.fire({
+                    imageUrl: "<?= base_url() ?>" + res,
+                    imageHeight: 200,
+                    imageAlt: 'A tall image'
+                    })
+             },
+             error: function(jqXHR, exception) {
+                 var error_msg = '';
+                    if (jqXHR.status === 0) {
+                    error_msg = 'Not connect.\n Verify Network.';
+                    } else if (jqXHR.status == 404) {
+                    // 404 page error
+                    error_msg = 'Requested page not found. [404]';
+                    } else if (jqXHR.status == 500) {
+                    // 500 Internal Server error
+                    error_msg = 'Internal Server Error [500].';
+                    } else if (exception === 'parsererror') {
+                    // Requested JSON parse
+                    error_msg = 'Requested JSON parse failed.';
+                    } else if (exception === 'timeout') {
+                    // Time out error
+                    error_msg = 'Time out error.';
+                    } else if (exception === 'abort') {
+                    // request aborte
+                    error_msg = 'Ajax request aborted.';
+                    } else {
+                    error_msg = 'Uncaught Error.\n' + jqXHR.responseText;
+                    }
+                 console.log(error_msg)
+             }
+         })
+
+     })
  </script>
