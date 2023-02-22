@@ -362,6 +362,10 @@ class Pelanggan extends CI_Controller
         $this->load->view('templete/footer');
     }
 
+    public function download_tagihan() {
+        
+    }
+
     public function cetak_pelanggan()
     {
         $this->load->view('templete/header');
@@ -454,19 +458,18 @@ class Pelanggan extends CI_Controller
         $writer->save('php://output');
     }
 
-    // generete qrcode
-    public function kodeqrpelanggan($id_pelanggan)
-    {
-        $kode_qr = './resource/adminlte31/img/qrcodePelanggan/qrcode-' . $id_pelanggan . '.png';
-        if (file_exists($kode_qr)) {
-            $this->load->view('templete/header');
-            $this->load->view('templete/navbar');
-            $data['user_data'] = $this->session->userdata('user');
-            $this->load->view('templete/side_bar', $data);
-            $data['pelanggan'] = $this->M_pelanggan->get__pelanggan_by_id($id_pelanggan);
-            $this->load->view('operator/pelanggan/kartu_pelanggan', $data);
-            $this->load->view('templete/footer');
-        } else {
+    
+    public function genereteQrcodePelanggan() {
+        $id_pelanggan = $this->input->get('id_pelanggan');
+        $pelanggan = $this->M_pelanggan->get__pelanggan_by_id($id_pelanggan);
+        $kode_qr = $pelanggan['qrcode_pelanggan'];
+       
+
+        // cek apakah pelanggan telah memiliki qr code
+        if($kode_qr) {
+             header('Content-Type: application/json');
+            echo json_encode( $kode_qr );
+        }else{
             // load library
             $this->load->library('ciqrcode');
             // Peth untuk menyimpan qrcode
@@ -476,14 +479,10 @@ class Pelanggan extends CI_Controller
             $params['size'] = 10;
             $params['savename'] = $path . 'qrcode-' . $id_pelanggan . '.png';
             $this->ciqrcode->generate($params);
-            $this->load->view('templete/header');
-            $this->load->view('templete/navbar');
-            $data['user_data'] = $this->session->userdata('user');
-            $this->load->view('templete/side_bar', $data);
-            $data['pelanggan'] = $this->M_pelanggan->get__pelanggan_by_id($id_pelanggan);
-            $this->load->view('operator/pelanggan/kartu_pelanggan', $data);
-            $this->load->view('templete/footer');
+            // update data pelanggan
+            $this->M_pelanggan->update_pelanggan(['qrcode_pelanggan' => $params['savename']], ['id_pelanggan' =>  $id_pelanggan]);
+            header('Content-Type: application/json');
+            echo json_encode($params['savename']);
         }
-        // die;
     }
 }
