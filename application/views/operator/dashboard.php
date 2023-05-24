@@ -175,8 +175,8 @@
 
 
 <script src="<?= base_url('resource/adminlte31/') ?>plugins/jquery/jquery.min.js"></script>
-<script src="<?= base_url('resource/adminlte31/') ?>plugins/chart.js/Chart.js ?>"></script>
-<script src="<?= base_url('resource/adminlte31/') ?>js/apexcharts.min.js ?>"></script>
+<script src="<?= base_url('resource/adminlte31/') ?>plugins/chart.js/Chart.js"></script>
+<script src="<?= base_url('resource/adminlte31/') ?>js/apexcharts.min.js"></script>
 <!-- <script src="https://cdn.jsdelivr.net/npm/apexcharts"></script> -->
 
 
