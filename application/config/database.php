@@ -75,10 +75,10 @@ $query_builder = TRUE;
 
 $db['default'] = array(
 	'dsn'	=> '',
-	'hostname' => 'localhost',
-	'username' => 'root',
-	'password' => '',
-	'database' => 'pansimas_bintoyo_db',
+	'hostname' => '127.0.0.1',
+	'username' => 'pansimas_bintoyo',
+	'password' => 'EhBFYmKyjCwk4NXW',
+	'database' => 'pansimas_bintoyo',
 	'dbdriver' => 'mysqli',
 	'dbprefix' => '',
 	'pconnect' => FALSE,
